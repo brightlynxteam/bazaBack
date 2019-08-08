@@ -1,0 +1,37 @@
+{
+  "name": "hutorok-backend",
+  "version": "1.0.0",
+  "description": "Backend part for hutorok site.",
+  "main": "src/server/index.js",
+  "dependencies": {
+    "joi": "^14.3.1",
+    "knex": "^0.19.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "koa2-formidable": "^1.0.2",
+    "pg": "^7.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon src/server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brightlynxteam/bazaBack.git"
+  },
+  "keywords": [
+    "hutorok",
+    "base",
+    "backend"
+  ],
+  "author": "BrightLynxTeam",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/brightlynxteam/bazaBack/issues"
+  },
+  "homepage": "https://github.com/brightlynxteam/bazaBack#readme"
+}
