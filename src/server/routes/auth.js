@@ -18,21 +18,21 @@ router.post(GET_ONE_USER_URL,
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
-                    message: 'Пользователь залогинен!',
+                    message: 'РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р·Р°Р»РѕРіРёРЅРµРЅ!',
                     data: res
                 };
             } else {
                 ctx.status = 401;
                 ctx.body = {
                     status: 'error',
-                    message: 'Неверный пароль!'
+                    message: 'РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ!'
                 }
             }
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
                 status: 'error',
-                message: 'Внутренняя ошибка сервера.'
+                message: 'Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°.'
             };
             console.log(err)
         }
