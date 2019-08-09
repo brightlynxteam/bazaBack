@@ -24,9 +24,20 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const EDIT_USER = Joi
+    .object()
+    .keys({
+        phone_number: Joi.string().regex(/^\d+$/).min(11),
+        email: Joi.string().email(),
+        first_name: Joi.string(),
+        second_name: Joi.string(),
+    })
+    .min(1)
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    EDIT_USER,
 };
 
 
