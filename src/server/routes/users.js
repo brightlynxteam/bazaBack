@@ -5,7 +5,7 @@ const usersQueries = require('../db/queries/users');
 const router = new Router();
 
 const PREFIX_URL = '/user';
-const GET_ONE_USER_URL = `${PREFIX_URL}`;
+const GET_ONE_USER_URL = `${PREFIX_URL}/getOneUser`;
 
 router.post(GET_ONE_USER_URL,
     validator.validate(validator.GET_ONE_USER_SCHEMA),
@@ -13,21 +13,35 @@ router.post(GET_ONE_USER_URL,
 
         try {
             let data = ctx.request.body;
-            let res = await usersQueries.getOneUser(data);
-            if (res) {
-                ctx.status = 200;
-                ctx.body = {
-                    status: 'success',
-                    message: 'Пользователь получен',
-                    data: res
-                };
+
+            //Права доступа определяются по токену
+            if (data.token) {
+                
+                let res = await usersQueries.getOneUser(data);
+                if (res) {
+                    ctx.status = 200;
+                    ctx.body = {
+                        status: 'success',
+                        message: 'Пользователь получен',
+                        data: res
+                    };
+                } else {
+                    ctx.status = 404;
+                    ctx.body = {
+                        status: 'error',
+                        message: 'Пользователь не найден'
+                    }
+                }
+
             } else {
-                ctx.status = 404;
+                
+                ctx.status = 403;
                 ctx.body = {
                     status: 'error',
-                    message: 'Пользователь не найден'
-                }
+                    message: 'Доступ запрещен.',
+                };
             }
+                        
         } catch (err) {
             ctx.status = 500;
             ctx.body = {

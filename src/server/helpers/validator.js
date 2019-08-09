@@ -20,9 +20,9 @@ const GET_ONE_USER_SCHEMA = Joi
     .keys({
         id: Joi.number().integer().min(1),
         email: Joi.string().email(),
-        phone_number: Joi.string().regex(/^\d+$/).min(10)
-    })
-    .min(1);
+        phone_number: Joi.string().regex(/^\d+$/).min(10),
+        token: Joi.string()
+    });
 
 module.exports = {
     validate,
