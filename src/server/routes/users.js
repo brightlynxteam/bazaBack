@@ -16,6 +16,7 @@ router.post(GET_ONE_USER_URL,
         try {
             let data = ctx.request.body;
             let res = await usersQueries.getOneUser(data);
+
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
@@ -46,9 +47,23 @@ router.post(GET_ONE_USER_URL,
         try {
             
             let data = ctx.request.body;
-            console.log(data);
+
+            let token = 'xxx'
             //Проверка наличия токена
-            if (data.token) {       
+            if (token) {       
+                // Поиск по в бд по токену
+                // let user = await usersQueries.getFindUsers(token)
+
+                // Если у пользователя нет прав админа
+                // if(user.permision < ADMIN_PERMISION) {
+                //     ctx.status = 403
+                //     ctx.body = {
+                //         status: 'error',
+                //         message: 'Доступ запрещен.'
+                //     }
+                //     return;
+                // }
+
                 let res = await usersQueries.getFindUsers(data)
                 if (res) {
                     ctx.status = 200,

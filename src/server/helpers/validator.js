@@ -34,7 +34,6 @@ const GET_FIND_USERS_SCHEMA = Joi
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
         order : Joi.string().default('ASC').valid('ASC, DESC'),
-        token : Joi.string(), 
     });
 
 module.exports = {
