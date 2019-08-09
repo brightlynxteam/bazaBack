@@ -13,17 +13,49 @@ router.post(GET_ONE_USER_URL,
 
         try {
             let data = ctx.request.body;
+            let token = 'xxx'
 
-            //Права доступа определяются по токену
-            if (data.token) {
-                
+            if (token) {
+                // Определяем пользователя по токену
+                // user = await usersQueries.getOneUser(token);
+                // if (!user) {
+                //     ctx.status = 403;
+                //     ctx.body = {
+                //         status: 'error',
+                //         message: 'Доступ запрещен.'
+                //     }
+                //     return;
+                // }
+
+                // Если json пустой, отправляем юзера
+                // if (!data.length) {
+                //     ctx.status = 200;
+                //     ctx.body = {
+                //         status: 'success',
+                //         message: 'Пользователь получен',
+                //         data: user
+                //     };
+                //     return;
+                // }
+
                 let res = await usersQueries.getOneUser(data);
                 if (res) {
+                    // Если уровень разрешения пользователя не достаточен, чтобы просмотреть данные этого пользователя
+                    // if (user.permision < res.permision) {
+                    //     ctx.status = 200;
+                    //     ctx.body = {
+                    //         status: 'success',
+                    //         message: 'Пользователь получен',
+                    //         user: user
+                    //     };
+                    //     return;
+                    // }
+
                     ctx.status = 200;
                     ctx.body = {
                         status: 'success',
                         message: 'Пользователь получен',
-                        data: res
+                        user: res
                     };
                 } else {
                     ctx.status = 404;
