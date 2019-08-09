@@ -4,7 +4,6 @@ let validate = (schema) =>
     (ctx, next) => {
         let res = Joi.validate(ctx.request.body, schema);
         if (res.error !== null) {
-            console.log(res.error);
             ctx.status = 400;
             ctx.body = {
                 status: 'error',
@@ -12,6 +11,9 @@ let validate = (schema) =>
             };
             return;
         }
+        //Чтобы возвращала входные данные с добавленными
+        //дефолтными значениями
+        ctx.request.body = res.value
         return next();
     };
 
@@ -24,9 +26,21 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const GET_FIND_USERS_SCHEMA = Joi
+    .object()
+    .keys({
+        queryString: Joi.string().required(),
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order : Joi.string().default('ASC').valid('ASC, DESC'),
+        token : Joi.string(), 
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    GET_FIND_USERS_SCHEMA,
 };
 
 
