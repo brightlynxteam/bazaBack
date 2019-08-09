@@ -7,24 +7,29 @@ const app = new Koa();
 
 app.use(logger());
 
-app.use(cors({
+app.use(
+  cors({
     credentials: true
-}));
+  })
+);
 
-app.use(formidable({multiples: true}));
+app.use(formidable({ multiples: true }));
 app.use(bodyParser());
 
 const usersRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
+const pagesRoutes = require('./routes/pages');
+
+app.use(pagesRoutes.routes());
 app.use(usersRoutes.routes());
 app.use(authRoutes.routes());
 
 let port = 13579;
 
 const server = app.listen(port, () => {
-   console.log(`Server backend listening on port: ${port}`);
+  console.log(`Server backend listening on port: ${port}`);
 });
 
 module.exports = {
-    server,
+  server
 };
