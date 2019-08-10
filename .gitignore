@@ -62,3 +62,6 @@ typings/
 
 # Editor directory
 .idea
+
+#visual studio
+.vs

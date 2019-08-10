@@ -24,9 +24,20 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const EDIT_PAGE_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        topic: Joi.string(),
+        text: Joi.string()
+    })
+    .min(1).or('topic', 'text');
+
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    EDIT_PAGE_SCHEMA
 };
 
 
