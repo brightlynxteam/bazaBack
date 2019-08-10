@@ -19,7 +19,7 @@ router.post(EDIT_HOUSING_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Корпус успешно изменен!',
-                    data: res[0]
+                    housing: res[0]
                 };
             } else {
                 ctx.status = 404;
