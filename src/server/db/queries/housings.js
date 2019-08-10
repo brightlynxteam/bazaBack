@@ -1,7 +1,7 @@
 const knex = require('../connection');
 
 function getAllHousings(data) {
-  return knex
+  return knex('housings')
     .limit(data.limit)
     .offset(data.offset)
     .orderBy(data.orderBy, data.order)
