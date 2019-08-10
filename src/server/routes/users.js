@@ -11,6 +11,7 @@ const GET_ALL_USERS_URL = `${PREFIX_URL}/getAllUsers`;
 router.post(GET_ALL_USERS_URL,
     validator.validate(validator.GET_ALL_USERS_SCHEMA),
     async (ctx) => {
+        // TODO добавить валидацию пользователя.
         try{
             const data = ctx.request.body;
             const res = await usersQueries.getAllUsers(data);
