@@ -22,7 +22,8 @@ const GET_ONE_USER_SCHEMA = Joi
         id: Joi.number().integer().min(1),
         email: Joi.string().email(),
         phone_number: Joi.string().regex(/^\d+$/).min(10)
-    });
+    })
+    .min(1);
 
 const GET_ALL_USERS_SCHEMA = Joi
     .object()
@@ -31,8 +32,8 @@ const GET_ALL_USERS_SCHEMA = Joi
         offset: Joi.number().integer().min(0).default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
-    })
-    .min(1);
+    });
+    
 
 module.exports = {
     validate,
