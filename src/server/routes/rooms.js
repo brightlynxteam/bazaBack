@@ -19,7 +19,7 @@ router.post(GET_ALL_ROOMS_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о комнатах получены!',
-                    data: res
+                    rooms: res
                 };
             } else {
                 ctx.status = 404;
