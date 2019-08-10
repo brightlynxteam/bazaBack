@@ -5,9 +5,9 @@ const pagesQueries = require('../db/queries/pages');
 const router = new Router();
 
 const PREFIX_URL = '/pages';
-const GET_ONE_USER_URL = `${PREFIX_URL}/editPage`;
+const EDIT_PAGE_URL = `${PREFIX_URL}/editPage`;
 
-router.post(GET_ONE_USER_URL,
+router.post(EDIT_PAGE_URL,
     validator.validate(validator.EDIT_PAGE_SCHEMA),
     async (ctx) => {
 
