@@ -23,10 +23,15 @@ const GET_ONE_USER_SCHEMA = Joi
         phone_number: Joi.string().regex(/^\d+$/).min(10)
     })
     .min(1);
+    
+const GET_SERVICE_SCHEMA = Joi.object().keys({
+    id: Joi.number().integer().min(1)
+    });
 
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    GET_SERVICE_SCHEMA
 };
 
 
