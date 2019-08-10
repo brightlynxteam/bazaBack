@@ -24,9 +24,21 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const EDIT_SERVICE_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        name: Joi.string(),
+        description: Joi.string(),
+        price: Joi.number().integer(),
+        info: Joi.string()
+    })
+    .or('name','description','price','info').min(1);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    EDIT_SERVICE_SCHEMA
 };
 
 
