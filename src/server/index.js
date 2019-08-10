@@ -15,7 +15,9 @@ app.use(formidable({multiples: true}));
 app.use(bodyParser());
 
 const usersRoutes = require('./routes/users');
+const reservationRoutes = require('./routes/reservation');
 app.use(usersRoutes.routes());
+app.use(reservationRoutes.routes());
 
 let port = 13579;
 
