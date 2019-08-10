@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
             table.boolean('active');
             table.integer('housing')
                 .references('id')
-                .inTable('user')
+                .inTable('housings')
                 .index();
             table.integer('capacity');
         });
