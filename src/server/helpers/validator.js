@@ -12,6 +12,7 @@ let validate = (schema) =>
             };
             return;
         }
+        ctx.request.body = res.value;
         return next();
     };
 
@@ -24,9 +25,19 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const GET_ALL_ROOMS_SCHEMA = Joi
+    .object()
+    .keys({
+        limit : Joi.number().integer().min(1).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    GET_ALL_ROOMS_SCHEMA,
 };
 
 
