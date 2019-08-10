@@ -2,9 +2,11 @@ const Router = require('koa-router');
 const queries = require('../db/queries/pages');
 
 const router = new Router();
-const BASE_URL = `/pages`;
 
-router.post(BASE_URL + '/getPage',
+const PREFIX_URL = `/pages`;
+const GET_PAGE_URL = PREFIX_URL + '/getPage';
+
+router.post(GET_PAGE_URL,
     async(ctx) => {
         try {
 
