@@ -32,8 +32,8 @@ const GET_ALL_USERS_SCHEMA = Joi
         offset: Joi.number().integer().min(0).default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
-    })
-    .min(1);
+    });
+    
 
 module.exports = {
     validate,
