@@ -15,11 +15,23 @@ router.post(GET_ONE_USER_URL,
             let data = ctx.request.body;
             let res = await pagesQueries.editPage(data);
             if (res) {
+                let page = await pagesQueries.getPage(data.id);
+
+                if (!page) {
+                    ctx.status = 404;
+                    ctx.body = {
+                        status: 'OK',
+                        message: 'Страница не найдена!'
+                    };
+                    return
+                }
+
+
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Страница изменена!',
-                    data: res
+                    data: page
                 };
             } else {
                 ctx.status = 400;
