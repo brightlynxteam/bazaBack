@@ -22,8 +22,7 @@ const GET_ONE_USER_SCHEMA = Joi
         id: Joi.number().integer().min(1),
         email: Joi.string().email(),
         phone_number: Joi.string().regex(/^\d+$/).min(10)
-    })
-    .min(1);
+    });
 
 const GET_ALL_USERS_SCHEMA = Joi
     .object()
