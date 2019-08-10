@@ -24,9 +24,22 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const EDIT_ROOM_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        number: Joi.number().integer().min(1),
+        description: Joi.string(),
+        active: Joi.boolean(),
+        housing: Joi.number().integer().min(1),
+        capacity: Joi.number().integer().min(1),
+    })
+    .min(2);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    EDIT_ROOM_SCHEMA,
 };
 
 
