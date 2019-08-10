@@ -5,7 +5,7 @@ const servicesQueries = require('../db/queries/services');
 const router = new Router();
 
 const PREFIX_URL = '/services';
-const GET_SERVICE_URL = `${PREFIX_URL}`;
+const GET_SERVICE_URL = `${PREFIX_URL}/getService`;
 
 router.post(GET_SERVICE_URL,
     validator.validate(validator.GET_SERVICE_SCHEMA),
