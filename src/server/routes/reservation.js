@@ -9,6 +9,9 @@ const ADD_RESERVATION_URL = `${PREFIX_URL}/addReservation`;
 router.post(ADD_RESERVATION_URL,
     validator.validate(validator.ADD_RESERVATION_SCHEMA),
     async (ctx) => {
+
+        //TODO добавить проверку залогинен пользователь или нет
+
         try {
             let data = ctx.request.body;
             let reservation = await reservationQueries.addReservation(data);
