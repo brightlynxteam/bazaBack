@@ -19,7 +19,7 @@ router.post(EDIT_ROOM_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о комнате изменены!',
-                    data: res[0]
+                    room: res[0]
                 };
             } else {
                 ctx.status = 404;
