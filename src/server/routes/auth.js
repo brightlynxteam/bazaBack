@@ -5,9 +5,9 @@ const usersQueries = require('../db/queries/users');
 const router = new Router();
 
 const PREFIX_URL = '/auth';
-const GET_ONE_USER_URL = `${PREFIX_URL}/login`;
+const LOGIN_URL = `${PREFIX_URL}/login`;
 
-router.post(GET_ONE_USER_URL,
+router.post(LOGIN_URL,
     validator.validate(validator.LOGIN_SCHEMA),
     async (ctx) => {
 
