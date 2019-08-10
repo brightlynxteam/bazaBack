@@ -24,9 +24,20 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const EDIT_HOUSING_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        number: Joi.number().integer().min(1),
+        description: Joi.string(),
+        photos: Joi.array().items(Joi.string().regex(/^.*\.+(jpg)$/)),
+    })
+    .min(2);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    EDIT_HOUSING_SCHEMA
 };
 
 
