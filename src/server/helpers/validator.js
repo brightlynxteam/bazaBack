@@ -24,9 +24,20 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const ADD_SERVICE_SCHEMA = Joi
+    .object()
+    .keys({
+        name: Joi.string().required(),
+        description: Joi.string().required(),
+        price: Joi.number().integer().required(),
+        info: Joi.string().required()
+    })
+    .min(1);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    ADD_SERVICE_SCHEMA
 };
 
 
