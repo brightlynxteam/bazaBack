@@ -10,7 +10,8 @@ router.post(ADD_RESERVATION_URL,
     validator.validate(validator.ADD_RESERVATION_SCHEMA),
     async (ctx) => {
         try {
-            let reservation = await reservationQueries.addReservation(ctx.request.body);
+            let data = ctx.request.body;
+            let reservation = await reservationQueries.addReservation(data);
 
             if (reservation){
                 ctx.status = 200;
