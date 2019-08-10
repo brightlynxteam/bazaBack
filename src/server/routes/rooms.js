@@ -19,7 +19,7 @@ router.post(ADD_ROOM_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Комната добавлена!',
-                    data: res[0]
+                    room: res[0]
                 };
             } else {
                 ctx.status = 404;
