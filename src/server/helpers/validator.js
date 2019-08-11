@@ -4,6 +4,7 @@ let validate = (schema) =>
     (ctx, next) => {
         let res = Joi.validate(ctx.request.body, schema);
         if (res.error !== null) {
+            console.log(res.error);
             ctx.status = 400;
             ctx.body = {
                 status: 'error',
