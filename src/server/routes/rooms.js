@@ -14,7 +14,7 @@ router.post(ADD_ROOM_URL,
         try {
             let data = ctx.request.body;
             let res = await roomsQueries.addRoom(data);
-            if (res) {
+            if (res.length !== 0) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
