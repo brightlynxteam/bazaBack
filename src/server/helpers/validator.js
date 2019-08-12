@@ -27,6 +27,7 @@ const GET_ONE_USER_SCHEMA = Joi
 const EDIT_USER = Joi
     .object()
     .keys({
+        id: Joi.number().integer().required(), 
         phone_number: Joi.string().regex(/^\d+$/).min(11),
         email: Joi.string().email(),
         first_name: Joi.string(),
