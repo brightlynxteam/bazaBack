@@ -12,24 +12,24 @@ router.post(GET_ALL_USERS_URL,
     validator.validate(validator.GET_ALL_USERS_SCHEMA),
     async (ctx) => {
         // TODO добавить валидацию пользователя.
-        try{
+        try {
             const data = ctx.request.body;
             const res = await usersQueries.getAllUsers(data);
-            if (res) {
+            if (res.length() !== 0) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователи получены!',
                     users: res
                 };
-            }else{
+            } else {
                 ctx.status = 404;
                 ctx.body = {
                     status: 'error',
                     message: 'Пользователи не найдены'
                 }
             }
-        }catch (err) {
+        } catch (err) {
             ctx.status = 500;
             ctx.body = {
                 status: 'error',
@@ -58,7 +58,7 @@ router.post(GET_ONE_USER_URL,
                 ctx.status = 404;
                 ctx.body = {
                     status: 'error',
-                    message: 'Пользователи не найдены'
+                    message: 'Пользователь не найден'
                 }
             }
         } catch (err) {
