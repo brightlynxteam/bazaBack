@@ -1,57 +1,41 @@
 const Router = require('koa-router');
-const queries = require('../db/queries/pages');
+const pagesQueries = require('../db/queries/pages');
+const validator = require('../helpers/validator');
 
 const router = new Router();
 
 const PREFIX_URL = `/pages`;
 const GET_PAGE_URL = PREFIX_URL + '/getPage';
+const GET_ALL_PAGES_URL = `${PREFIX_URL}/getAllPages`;
 
 router.post(GET_PAGE_URL,
+    validator.validate(validator.GET_PAGE_SCHEMA),
     async(ctx) => {
         try {
 
             let dataObj = ctx.request.body;
-            let id = null;
+            let id = dataObj.id;
 
-            if (dataObj.hasOwnProperty("id")) {
-                id = dataObj.id;
+            const resultData = await pagesQueries.getPage(id);
 
-                if (typeof(id) == typeof (0)) {
-
-                    const resultData = await queries.getPage(id);
-
-                    if (resultData.length != 0) {
-                        ctx.status = 200;
-                        ctx.body = {
-                            status: 'OK',
-                            message: 'Страница получена!',
-                            page: resultData[0]
-                        };
-                    } else {
-                        ctx.status = 404;
-                        ctx.body = {
-                            status: 'Error',
-                            message: 'Страница не найдена'
-                        };
-                    }
-                } else {
-                    ctx.status = 400;
-                    ctx.body = {
-                        status: 'Error',
-                        message: 'Полe id не число'
-                    };
-                }
+            if (resultData.length != 0) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Страница получена!',
+                    page: resultData[0]
+                };
             } else {
-                ctx.status = 400;
+                ctx.status = 404;
                 ctx.body = {
                     status: 'Error',
-                    message: 'Поля id не существует'
+                    message: 'Страница не найдена'
                 };
             }
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
-                status: 'error',
+                status: 'Error',
                 message: 'Внутренняя ошибка сервера.'
             };
             console.log(err)
@@ -59,13 +43,6 @@ router.post(GET_PAGE_URL,
     }
 );
 
-module.exports = router;
-const validator = require('../helpers/validator');
-const pagesQueries = require('../db/queries/pages');
-const router = new Router();
-
-const PREFIX_URL = '/pages';
-const GET_ALL_PAGES_URL = `${PREFIX_URL}/getAllPages`;
 
 router.post(
   GET_ALL_PAGES_URL,
