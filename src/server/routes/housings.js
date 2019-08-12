@@ -1,31 +1,32 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
-const usersQueries = require('../db/queries/users');
+const housingsQueries = require('../db/queries/housings');
 
 const router = new Router();
 
-const PREFIX_URL = '/user';
-const GET_ONE_USER_URL = `${PREFIX_URL}`;
+const PREFIX_URL = '/housings';
+const GET_HOUSING_URL = `${PREFIX_URL}/getHousing`;
 
-router.post(GET_ONE_USER_URL,
-  validator.validate(validator.GET_ONE_USER_SCHEMA),
+router.post(GET_HOUSING_URL,
+  validator.validate(validator.GET_HOUSING_SCHEMA),
   async (ctx) => {
     try {
       const data = ctx.request.body;
-      const res = await usersQueries.getOneUser(data);
+      const res = await housingsQueries.getHousing(data.id);
       if (res) {
         ctx.status = 200;
         ctx.body = {
-          status: 'success',
-          message: 'Пользователь получен',
-          data: res,
+          status: 'OK',
+          message: 'Данные о корпусе получены!',
+          housing: res,
         };
       } else {
         ctx.status = 404;
         ctx.body = {
           status: 'error',
-          message: 'Пользователь не найден',
+          message: 'Корпус не найден',
         };
+        console.log(ctx.body.message);
       }
     } catch (err) {
       ctx.status = 500;
