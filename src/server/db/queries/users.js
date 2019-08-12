@@ -7,7 +7,7 @@ function getOneUser(data) {
         .select('id','email','phone_number','first_name','second_name', 'created_at', 'updated_at');
 }
 
-function getFindUsers(data) {
+function findUsers(data) {
     return knex('users')
         .whereRaw(`
             to_tsvector('russian', first_name) || 
@@ -25,5 +25,5 @@ function getFindUsers(data) {
 
 module.exports = {
     getOneUser,
-    getFindUsers,
+    findUsers,
 };
