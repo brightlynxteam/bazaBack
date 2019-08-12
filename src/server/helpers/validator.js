@@ -38,8 +38,7 @@ const REGISTER_USER_SCHEMA = Joi.object()
     first_name: Joi.string().required(),
     second_name: Joi.string().required(),
     password: Joi.string().required()
-  })
-  .min(1);
+  });
     
 const LOGIN_SCHEMA = Joi
     .object()
@@ -48,7 +47,7 @@ const LOGIN_SCHEMA = Joi
         email: Joi.string().email(),
         password: Joi.string().required()
     })
-    .or('email', 'phone_number').min(1);
+    .or('email', 'phone_number');
 
 const GET_ALL_PAGES_SCHEMA = Joi.object()
   .keys({
@@ -58,8 +57,7 @@ const GET_ALL_PAGES_SCHEMA = Joi.object()
     order: Joi.string()
       .regex(/^(ASC|DESC)$/)
       .default('ASC')
-  })
-  .min(1);
+  });
 
 const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
   limit: Joi.number().default(10),
@@ -84,6 +82,10 @@ const GET_ALL_SERVICES_SCHEMA = Joi.object().keys({
     .default('ASC')
 });
 
+const GET_SERVICE_SCHEMA = Joi.object().keys({
+    id: Joi.number().integer().min(1)
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -92,5 +94,6 @@ module.exports = {
     GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
     ADD_PAGE_SCHEMA,
-    GET_ALL_SERVICES_SCHEMA
+    GET_ALL_SERVICES_SCHEMA,
+    GET_SERVICE_SCHEMA
 };
