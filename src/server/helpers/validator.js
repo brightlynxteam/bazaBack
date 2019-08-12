@@ -105,6 +105,19 @@ const EDIT_HOUSING_SCHEMA = Joi
     })
     .min(2);
 
+const ADD_RESERVATION_SCHEMA = Joi
+    .object()
+    .keys({
+        room: Joi.number().integer(),
+        user: Joi.number().integer(),
+        start_date: Joi.number().integer(),
+        end_date: Joi.number().integer(),
+        bail: Joi.boolean(),
+        paid: Joi.boolean(),
+        active: Joi.boolean()
+    })
+    .required();
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -116,5 +129,6 @@ module.exports = {
     GET_ALL_SERVICES_SCHEMA,
     GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,
-    EDIT_HOUSING_SCHEMA
+    EDIT_HOUSING_SCHEMA,
+    ADD_RESERVATION_SCHEMA
 };
