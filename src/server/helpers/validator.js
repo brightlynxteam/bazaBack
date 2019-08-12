@@ -27,7 +27,7 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
-const GET_FIND_USERS_SCHEMA = Joi
+const FIND_USERS_SCHEMA = Joi
     .object()
     .keys({
         queryString: Joi.string().required(),
@@ -40,7 +40,7 @@ const GET_FIND_USERS_SCHEMA = Joi
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
-    GET_FIND_USERS_SCHEMA,
+    FIND_USERS_SCHEMA,
 };
 
 
