@@ -14,7 +14,7 @@ app.use(
 );
 
 app.use(formidable({ multiples: true }));
-app.use(bodyParser());<<<<<< fixes#25
+app.use(bodyParser());
 
 const authRoutes = require('./routes/auth');
 const pagesRoutes = require('./routes/pages');
@@ -22,6 +22,7 @@ const housingsRoutes = require('./routes/housings');
 const servicesRoutes = require('./routes/services');
 const roomsRoutes = require('./routes/rooms');
 const reservationRoutes = require('./routes/reservation');
+const usersRoutes = require('./routes/users');
 
 app.use(usersRoutes.routes());
 app.use(authRoutes.routes());

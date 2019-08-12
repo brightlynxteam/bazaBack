@@ -39,7 +39,7 @@ const REGISTER_USER_SCHEMA = Joi.object()
     second_name: Joi.string().required(),
     password: Joi.string().required()
   });
-    
+
 const LOGIN_SCHEMA = Joi
     .object()
     .keys({
@@ -118,6 +118,12 @@ const ADD_RESERVATION_SCHEMA = Joi
     })
     .required();
 
+const GET_ONE_ROOM_SCHEMA = Joi
+  .object()
+  .keys({
+    id: Joi.number().integer().required()
+  });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -130,5 +136,6 @@ module.exports = {
     GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,
     EDIT_HOUSING_SCHEMA,
-    ADD_RESERVATION_SCHEMA
+    ADD_RESERVATION_SCHEMA,
+    GET_ONE_ROOM_SCHEMA
 };

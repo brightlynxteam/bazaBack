@@ -8,6 +8,13 @@ async function getAllRooms(data) {
         .select('id','number','description','active','housing', 'capacity');
 }
 
+async function getOneRoom(data) {
+  return knex('rooms')
+    .where('id', data.id)
+    .select('id', 'number', 'description', 'active', 'housing', 'capacity');
+};
+
 module.exports = {
     getAllRooms,
+    getOneRoom,
 };
