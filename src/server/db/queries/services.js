@@ -1,8 +1,8 @@
 const knex = require('../connection');
 
 function addService(data) {
-	return knex('services')
-		.returning(['id', 'name', 'description', 'price', 'info'])
+    return knex('services')
+        .returning(['id', 'name', 'description', 'price', 'info'])
         .insert(data)
 }
 
