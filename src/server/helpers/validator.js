@@ -31,7 +31,6 @@ const ADD_HOUSING_SCHEMA = Joi
         description: Joi.string().required(),
         photos: Joi.array().required()
     })
-    .min(1);
 
 module.exports = {
     validate,
