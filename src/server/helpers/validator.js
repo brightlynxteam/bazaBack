@@ -86,6 +86,15 @@ const GET_SERVICE_SCHEMA = Joi.object().keys({
     id: Joi.number().integer().min(1)
     });
 
+const GET_ALL_ROOMS_SCHEMA = Joi
+    .object()
+    .keys({
+        limit : Joi.number().integer().min(1).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string().regex(/^(ASC|DESC)$/).default('ASC')
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -95,5 +104,6 @@ module.exports = {
     GET_ALL_HOUSINGS_SCHEMA,
     ADD_PAGE_SCHEMA,
     GET_ALL_SERVICES_SCHEMA,
-    GET_SERVICE_SCHEMA
+    GET_SERVICE_SCHEMA,
+    GET_ALL_ROOMS_SCHEMA,
 };
