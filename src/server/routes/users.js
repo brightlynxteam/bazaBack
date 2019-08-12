@@ -44,39 +44,13 @@ router.post(GET_ONE_USER_URL,
 
         try {
             let data = ctx.request.body;
-
-            let token = 'xxx';
-
-            //Тестовый id пользователя
-            let user = {id: 1};
-
-            // let user = await usersQueries.getOneUser(token);
-            // if(!user) {
-            //     ctx.status = 403;
-            //     ctx.body = {
-            //         status: 'error',
-            //         message: 'Доступ запрещен.'
-            //     };
-            //     return;
-            // }
-            
-
-            let res = await usersQueries.editUser(user.id, data);
-            
+            let id = data.id;
+            delete data.id;
+            let res = await usersQueries.editUser(id, data);
             if (res) {
-                user = await usersQueries.getOneUser({id: user.id});
-                if (!user) {
-                    ctx.status = 418;
-                    ctx.body = {
-                        status: 'error',
-                        message: 'Я ЧАЙНИК!!!',
-                    };
-                    return;
-                }
-
                 ctx.status = 200;
                 ctx.body = {
-                    status: 'ОК',
+                    status: 'success',
                     message: 'Профиль пользователя успешно изменен!',
                     user: user
                 };
@@ -85,7 +59,7 @@ router.post(GET_ONE_USER_URL,
                 ctx.body = {
                     status: 'error',
                     message: 'Пользователь не найден'
-                }
+                };
             }
         } catch (err) {
             ctx.status = 500;
