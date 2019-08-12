@@ -15,7 +15,7 @@ router.post(GET_ALL_USERS_URL,
         try {
             const data = ctx.request.body;
             const res = await usersQueries.getAllUsers(data);
-            if (res.length() !== 0) {
+            if (res.length !== 0) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
