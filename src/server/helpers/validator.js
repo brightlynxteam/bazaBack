@@ -12,8 +12,6 @@ let validate = (schema) =>
             };
             return;
         }
-        //Чтобы возвращала входные данные с добавленными
-        //дефолтными значениями
         ctx.request.body = res.value
         return next();
     };
