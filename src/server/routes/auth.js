@@ -1,26 +1,34 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
-const servicesQueries = require('../db/queries/services');
+const usersQueries = require('../db/queries/users');
 
 const router = new Router();
 
-const PREFIX_URL = '/services';
-const GET_ALL_SERVICES_URL = `${PREFIX_URL}/getAllServices`;
-const GET_SERVICE_URL = `${PREFIX_URL}/getService`;
+const PREFIX_URL = '/auth';
+const REGISTER_USER_URL = `${PREFIX_URL}/register`;
+const LOGIN_URL = `${PREFIX_URL}/login`;
 
 router.post(
-  GET_ALL_SERVICES_URL,
-  validator.validate(validator.GET_ALL_SERVICES_SCHEMA),
+  REGISTER_USER_URL,
+  validator.validate(validator.REGISTER_USER_SCHEMA),
   async ctx => {
     try {
       let data = ctx.request.body;
-      let services = await servicesQueries.getAllServices(data);
-      ctx.status = 200;
-      ctx.body = {
-        status: 'OK',
-        message: 'Данные об услугах получены!',
-        services
-      };
+      let [err, user] = await usersQueries.register(data);
+      if (user) {
+        ctx.status = 200;
+        ctx.body = {
+          status: 'OK',
+          message: 'Пользователь зарегистрирован!',
+          user
+        };
+      } else if (err) {
+        ctx.status = 409;
+        ctx.body = {
+          status: 'Error',
+          message: err
+        };
+      }
     } catch (err) {
       ctx.status = 500;
       ctx.body = {
@@ -31,25 +39,25 @@ router.post(
   }
 );
 
-router.post(GET_SERVICE_URL,
-    validator.validate(validator.GET_SERVICE_SCHEMA),
+router.post(LOGIN_URL,
+    validator.validate(validator.LOGIN_SCHEMA),
     async (ctx) => {
 
         try {
             let data = ctx.request.body;
-            let res = await servicesQueries.getService(data);
+            let res = await usersQueries.getOneUser(data);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
-                    message: 'Данные об услуге получены!',
+                    message: 'Пользователь залогинен!',
                     data: res
                 };
             } else {
-                ctx.status = 404;
+                ctx.status = 401;
                 ctx.body = {
                     status: 'error',
-                    message: 'Услуга не найдена'
+                    message: 'Неверный пароль!'
                 }
             }
         } catch (err) {
@@ -61,5 +69,6 @@ router.post(GET_SERVICE_URL,
             console.log(err)
         }
     });
+
 
 module.exports = router;
