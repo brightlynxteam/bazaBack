@@ -27,7 +27,7 @@ const GET_ONE_USER_SCHEMA = Joi
 const GET_HOUSING_SCHEMA = Joi
   .object()
   .keys({
-    id: Joi.number().integer().min(1).required()
+    id: Joi.number().integer().required()
   });
 
 module.exports = {
