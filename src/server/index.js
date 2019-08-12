@@ -20,9 +20,9 @@ const usersRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
 const pagesRoutes = require('./routes/pages');
 
-app.use(pagesRoutes.routes());
 app.use(usersRoutes.routes());
 app.use(authRoutes.routes());
+app.use(pagesRoutes.routes());
 
 let port = 13579;
 
