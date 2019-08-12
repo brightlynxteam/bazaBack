@@ -32,7 +32,6 @@ const ADD_SERVICE_SCHEMA = Joi
         price: Joi.number().integer().required(),
         info: Joi.string().required()
     })
-    .min(1);
 
 module.exports = {
     validate,
