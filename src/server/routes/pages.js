@@ -14,24 +14,13 @@ router.post(EDIT_PAGE_URL,
         try {
             let data = ctx.request.body;
             let res = await pagesQueries.editPage(data);
-            if (res) {
-                let page = await pagesQueries.getPage(data.id);
-
-                if (!page) {
-                    ctx.status = 404;
-                    ctx.body = {
-                        status: 'OK',
-                        message: 'Страница не найдена!'
-                    };
-                    return
-                }
-
-
+            if (res[0]) {
+                
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Страница изменена!',
-                    data: page
+                    data: page[0]
                 };
             } else {
                 ctx.status = 400;
