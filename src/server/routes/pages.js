@@ -42,12 +42,12 @@ router.post(GET_PAGE_URL,
 
             const resultData = await pagesQueries.getPage(id);
 
-            if (resultData.length != 0) {
+            if (resultData != null) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Страница получена!',
-                    page: resultData[0]
+                    page: resultData
                 };
             } else {
                 ctx.status = 404;
