@@ -1,5 +1,11 @@
 const knex = require('../connection');
 
+function addPage(data) {
+  return knex('pages')
+    .insert(data)
+    .returning(['id', 'topic', 'text', 'created_at', 'updated_at']);
+}
+
 function getAllPages(data) {
   return knex('pages')
     .orderBy(data.orderBy, data.order)
@@ -9,5 +15,6 @@ function getAllPages(data) {
 }
 
 module.exports = {
-  getAllPages
+  getAllPages,
+  addPage
 };

@@ -70,11 +70,17 @@ const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
     .default('ASC')
 });
 
+const ADD_PAGE_SCHEMA = Joi.object().keys({
+  topic: Joi.string().required(),
+  text: Joi.string().required()
+});
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
     LOGIN_SCHEMA,
     REGISTER_USER_SCHEMA,
     GET_ALL_PAGES_SCHEMA,
-    GET_ALL_HOUSINGS_SCHEMA
+    GET_ALL_HOUSINGS_SCHEMA,
+    ADD_PAGE_SCHEMA
 };
