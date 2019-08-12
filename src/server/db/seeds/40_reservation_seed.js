@@ -94,9 +94,8 @@ exports.seed = (knex, Promise) => {
                 user: 3,
                 start_date: 1572685200000,
                 end_date: 1573117200000,
-                bail: true,
-                paid: false,
-                active: false
+
+                //поля bail, paid и active по умолчанию установятся в false
             });
         })
         .then(() => {
@@ -105,9 +104,8 @@ exports.seed = (knex, Promise) => {
                 user: 1,
                 start_date: 1567328400000,
                 end_date: 1567760400000,
-                bail: false,
-                paid: true,
-                active: false
+
+                //поля bail, paid и active по умолчанию установятся в false
             });
         })
 };

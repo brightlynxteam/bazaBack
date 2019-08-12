@@ -13,9 +13,9 @@ exports.up = (knex, Promise) => {
             .notNullable();
         table.bigInteger('start_date').notNullable();
         table.bigInteger('end_date').notNullable();
-        table.boolean('bail').notNullable();
-        table.boolean('paid').notNullable();
-        table.boolean('active').notNullable();
+        table.boolean('bail').defaultTo('false').notNullable();
+        table.boolean('paid').defaultTo('false').notNullable();
+        table.boolean('active').defaultTo('false').notNullable();
     })
 };
 
