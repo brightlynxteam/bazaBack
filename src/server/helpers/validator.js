@@ -75,6 +75,15 @@ const ADD_PAGE_SCHEMA = Joi.object().keys({
   text: Joi.string().required()
 });
 
+const GET_ALL_SERVICES_SCHEMA = Joi.object().keys({
+  limit: Joi.number().default(10),
+  offset: Joi.number().default(0),
+  orderBy: Joi.string().default('id'),
+  order: Joi.string()
+    .regex(/^(ASC|DESC)$/)
+    .default('ASC')
+});
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -82,5 +91,6 @@ module.exports = {
     REGISTER_USER_SCHEMA,
     GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
-    ADD_PAGE_SCHEMA
+    ADD_PAGE_SCHEMA,
+    GET_ALL_SERVICES_SCHEMA
 };
