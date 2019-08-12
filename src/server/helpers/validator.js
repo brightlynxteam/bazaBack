@@ -26,6 +26,41 @@ const GET_ONE_USER_SCHEMA = Joi.object()
   })
   .min(1);
 
+const REGISTER_USER_SCHEMA = Joi.object()
+  .keys({
+    phone_number: Joi.string()
+      .regex(/^\d+$/)
+      .length(11)
+      .required(),
+    email: Joi.string()
+      .email()
+      .required(),
+    first_name: Joi.string().required(),
+    second_name: Joi.string().required(),
+    password: Joi.string().required()
+  })
+  .min(1);
+    
+const LOGIN_SCHEMA = Joi
+    .object()
+    .keys({
+        phone_number: Joi.string().regex(/^\d+$/).length(11),
+        email: Joi.string().email(),
+        password: Joi.string().required()
+    })
+    .or('email', 'phone_number').min(1);
+
+const GET_ALL_PAGES_SCHEMA = Joi.object()
+  .keys({
+    limit: Joi.number().default(10),
+    offset: Joi.number().default(0),
+    orderBy: Joi.string().default('id'),
+    order: Joi.string()
+      .regex(/^(ASC|DESC)$/)
+      .default('ASC')
+  })
+  .min(1);
+
 const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
   limit: Joi.number().default(10),
   offset: Joi.number().default(0),
@@ -36,7 +71,10 @@ const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
 });
 
 module.exports = {
-  validate,
-  GET_ONE_USER_SCHEMA,
-  GET_ALL_HOUSINGS_SCHEMA
+    validate,
+    GET_ONE_USER_SCHEMA,
+    LOGIN_SCHEMA,
+    REGISTER_USER_SCHEMA,
+    GET_ALL_PAGES_SCHEMA,
+    GET_ALL_HOUSINGS_SCHEMA
 };
