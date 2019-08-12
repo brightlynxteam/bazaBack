@@ -18,7 +18,7 @@ let validate = (schema) =>
 const GET_ONE_USER_SCHEMA = Joi
     .object()
     .keys({
-        id: Joi.number().integer().required(),
+        id: Joi.number().integer().min(1).required(),
         email: Joi.string().email(),
         phone_number: Joi.string().regex(/^\d+$/).min(11),
     });
