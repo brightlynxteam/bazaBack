@@ -7,7 +7,7 @@ const router = new Router();
 const PREFIX_URL = '/user';
 
 const GET_ONE_USER_URL = `${PREFIX_URL}`;
-const GET_FIND_USERS_URL = `${PREFIX_URL}/findUsers`
+const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
 
 router.post(GET_ONE_USER_URL,
     validator.validate(validator.GET_ONE_USER_SCHEMA),
@@ -40,45 +40,27 @@ router.post(GET_ONE_USER_URL,
             console.log(err)
         }
     })
-    .post(GET_FIND_USERS_URL,
-    validator.validate(validator.GET_FIND_USERS_SCHEMA), 
+    .post(FIND_USERS_URL,
+    validator.validate(validator.FIND_USERS_SCHEMA), 
     async (ctx) => {
 
         try {
-            
             let data = ctx.request.body;
 
-            let token = 'xxx'
-            //Проверка наличия токена
-            if (token) {       
-                // Поиск по в бд по токену
-                // let user = await usersQueries.getFindUsers(token)
-
-                // Если у пользователя нет прав админа
-                // if(user.permision < ADMIN_PERMISION) {
-                //     ctx.status = 403
-                //     ctx.body = {
-                //         status: 'error',
-                //         message: 'Доступ запрещен.'
-                //     }
-                //     return;
-                // }
-
-                let res = await usersQueries.getFindUsers(data)
-                if (res) {
-                    ctx.status = 200,
-                    ctx.body = {
-                        status: 'success',
-                        message: 'Пользователи получены!',
-                        users: res
-                    }
-                }
+            let res = await usersQueries.findUsers(data)
+            if (res) {
+                 ctx.status = 200;
+                 ctx.body = {
+               	    status: 'success',
+                    message: 'Пользователи получены!',
+               	    users: res
+           	};
             } else {
-                ctx.status = 403
+                ctx.status = 404;
                 ctx.body = {
                     status: 'error',
-                    message: 'Доступ запрещен.'
-                }
+                    message: 'Пользователь не найден.'
+                };
             }          
         } catch (err) {
             ctx.status = 500;
