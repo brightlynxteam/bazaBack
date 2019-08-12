@@ -24,6 +24,15 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
+const LOGIN_SCHEMA = Joi
+    .object()
+    .keys({
+        phone_number: Joi.string().regex(/^\d+$/).length(11),
+        email: Joi.string().email(),
+        password: Joi.string().required()
+    })
+    .or('email', 'phone_number').min(1);
+
 const REGISTER_USER_SCHEMA = Joi.object().keys({
     phone_number: Joi.string().regex(/^\d+$/).length(11).required(),
     email: Joi.string().email().required(),
@@ -35,6 +44,7 @@ const REGISTER_USER_SCHEMA = Joi.object().keys({
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
+    LOGIN_SCHEMA,
     REGISTER_USER_SCHEMA
 };
 
