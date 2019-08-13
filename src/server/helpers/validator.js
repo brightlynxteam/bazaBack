@@ -121,7 +121,7 @@ const ADD_RESERVATION_SCHEMA = Joi
 const GET_ONE_ROOM_SCHEMA = Joi
   .object()
   .keys({
-    id: Joi.number().integer().required()
+    id: Joi.number().integer().min(1).required()
   });
 
 module.exports = {

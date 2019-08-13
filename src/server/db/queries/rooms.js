@@ -10,7 +10,7 @@ async function getAllRooms(data) {
 
 async function getOneRoom(data) {
   return knex('rooms')
-    .where('id', data.id)
+    .where({ id: data.id })
     .select('id', 'number', 'description', 'active', 'housing', 'capacity');
 };
 
