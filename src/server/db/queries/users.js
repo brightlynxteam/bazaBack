@@ -15,6 +15,16 @@ function getOneUser(data) {
     );
 }
 
+function login(data) {
+    return knex('users')
+        .where(data)
+        .first()
+        .select(
+            'id',
+            'password',
+        );
+}
+
 function register(data) {
   return knex('users')
     .insert(data)
@@ -32,6 +42,7 @@ function register(data) {
 }
 
 module.exports = {
-  getOneUser,
-  register
+    getOneUser,
+    register,
+    login
 };

@@ -4,6 +4,7 @@
   "description": "Backend part for hutorok site.",
   "main": "src/server/index.js",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "joi": "^14.3.1",
     "knex": "^0.19.1",
     "koa": "^2.7.0",
