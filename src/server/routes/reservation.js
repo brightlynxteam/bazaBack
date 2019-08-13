@@ -6,7 +6,7 @@ const router = new Router();
 const PREFIX_URL = '/reservation';
 const EDIT_RESERVATION_URL = `${PREFIX_URL}/editReservation`;
 
-router.put(EDIT_RESERVATION_URL,
+router.post(EDIT_RESERVATION_URL,
     validator.validate(validator.EDIT_RESERVATION_SCHEMA),
     async (ctx) => {
 
