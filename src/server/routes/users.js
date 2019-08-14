@@ -13,7 +13,7 @@ router.post(GET_ONE_USER_URL,
     try {
       const data = ctx.request.body;
       const res = await usersQueries.getOneUser(data);
-      if (res) {
+      if (res.id > 0) {
         ctx.status = 200;
         ctx.body = {
           status: 'success',

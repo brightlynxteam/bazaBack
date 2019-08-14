@@ -1,8 +1,10 @@
 const knex = require('../connection');
 
-function getHousing(id) {
+function getHousing(data) {
   return knex('housings')
-  .where('id', id);
+  .where({
+    id : data.id
+  }) 
 }
 
 module.exports = {

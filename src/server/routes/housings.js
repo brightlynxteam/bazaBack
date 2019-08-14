@@ -12,8 +12,9 @@ router.post(GET_HOUSING_URL,
   async (ctx) => {
     try {
       const data = ctx.request.body;
-      const res = await housingsQueries.getHousing(data.id);
-      if (res) {
+      const res = await housingsQueries.getHousing(data);
+      console.log(res);
+      if (res.length > 0) {
         ctx.status = 200;
         ctx.body = {
           status: 'OK',
