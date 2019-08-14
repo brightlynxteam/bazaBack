@@ -13,7 +13,6 @@ router.post(GET_HOUSING_URL,
     try {
       const data = ctx.request.body;
       const res = await housingsQueries.getHousing(data);
-      console.log(res);
       if (res.length > 0) {
         ctx.status = 200;
         ctx.body = {
