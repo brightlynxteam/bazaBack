@@ -31,7 +31,14 @@ function register(data) {
     });
 }
 
+function signRefreshToken(data){
+  return knex('users')
+      .where('id',data.id)
+      .update('refresh_token',data.refreshToken);
+}
+
 module.exports = {
   getOneUser,
-  register
+  register,
+  signRefreshToken
 };
