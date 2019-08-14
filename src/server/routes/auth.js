@@ -1,7 +1,7 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const usersQueries = require('../db/queries/users');
-const crypt = require('../helpers/auth')
+const authHelper = require('../helpers/auth')
 
 const router = new Router();
 
@@ -15,7 +15,7 @@ router.post(
   async ctx => {
     try {
       let data = ctx.request.body;
-      data.password = await crypt.getHash(data.password)
+      data.password = await authHelper.getHash(data.password)
 
       let [err, user] = await usersQueries.register(data);
       if (user) {
@@ -48,10 +48,10 @@ router.post(LOGIN_URL,
 
         try {
             let data = ctx.request.body;
-            let userData = (data.email) ? { email: data.email } : {phone_number: data.phone_number}
+            let userData = (data.email) ? { email: data.email } : {phone_number: data.phone_number};
 
 
-            let user = await usersQueries.login(userData)
+            let user = await usersQueries.login(userData);
             
             if (!user) {
 
@@ -63,16 +63,16 @@ router.post(LOGIN_URL,
                 return
             }
 
-            let login = await crypt.comparePassword(data.password, user.password)
+            let wrongPassword = await authHelper.comparePassword(data.password, user.password);
 
             let res = await usersQueries.getOneUser(user);
-            if (login && res) {
+            if (wrongPassword && res) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователь залогинен!',
                     data: res
-                };
+                }
             } else {
                 ctx.status = 401;
                 ctx.body = {
@@ -85,8 +85,8 @@ router.post(LOGIN_URL,
             ctx.body = {
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
-            };
-            console.log(err)
+            }
+            console.log(err);
         }
     });
 
