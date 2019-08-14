@@ -4,15 +4,6 @@ const formidable = require('koa2-formidable');
 const cors = require('koa2-cors');
 const logger = require('koa-logger');
 const app = new Koa();
-const t = require("./helpers/auth");
-const jwt = require('jsonwebtoken');
-
-async function test(){
-  const token = await jwt.sign({id: 2},'ehlo',{expiresIn: '24h'});
-  const res = await t.checkExpireToken('sdfsdf');
-  console.log(res);
-}
-test();
 
 app.use(logger());
 
@@ -23,9 +14,9 @@ app.use(
 );
 
 app.use(formidable({ multiples: true }));
-app.use(bodyParser());//<<<<<< fixes#25
+app.use(bodyParser());<<<<<< fixes#25
 
-const usersRoutes = require('./routes/users');
+
 const authRoutes = require('./routes/auth');
 const pagesRoutes = require('./routes/pages');
 const housingsRoutes = require('./routes/housings');
