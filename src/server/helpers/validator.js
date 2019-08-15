@@ -143,7 +143,7 @@ const EDIT_ROOM_SCHEMA = Joi
 
 const GET_PAGE_SCHEMA = Joi.object()
     .keys({
-        id: Joi.number()
+        id: Joi.number().integer().min(1).required()
     })
     .min(1);
 
@@ -155,7 +155,6 @@ module.exports = {
     REGISTER_USER_SCHEMA,
     GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
-    ADD_PAGE_SCHEMA,
     GET_ALL_SERVICES_SCHEMA,
     GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,

@@ -22,7 +22,8 @@ module.exports = {
 function getPage(id) {
     return knex('pages')
         .select('*')
-        .where ({id: id}).first();
+        .where ({id: id})
+        .first();
 }
 
 module.exports = {

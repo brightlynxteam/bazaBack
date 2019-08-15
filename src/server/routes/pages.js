@@ -5,7 +5,7 @@ const validator = require('../helpers/validator');
 const router = new Router();
 
 const PREFIX_URL = `/pages`;
-const GET_PAGE_URL = PREFIX_URL + '/getPage';
+const GET_PAGE_URL = `${PREFIX_URL}/getPage`;
 const GET_ALL_PAGES_URL = `${PREFIX_URL}/getAllPages`;
 const ADD_PAGE_URL = `${PREFIX_URL}/addPage`;
 
@@ -42,7 +42,7 @@ router.post(GET_PAGE_URL,
 
             const resultData = await pagesQueries.getPage(id);
 
-            if (resultData != null) {
+            if (!resultData) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
