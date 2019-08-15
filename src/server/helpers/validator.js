@@ -11,6 +11,7 @@ let validate = schema => (ctx, next) => {
     };
     return;
   }
+  ctx.request.body = res.value;
   return next();
 };
 
@@ -118,6 +119,16 @@ const ADD_RESERVATION_SCHEMA = Joi
     })
     .required();
 
+const FIND_USERS_SCHEMA = Joi
+    .object()
+    .keys({
+        queryString: Joi.string().required(),
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order : Joi.string().default('ASC').valid('ASC, DESC'),
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -130,5 +141,6 @@ module.exports = {
     GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,
     EDIT_HOUSING_SCHEMA,
-    ADD_RESERVATION_SCHEMA
+    ADD_RESERVATION_SCHEMA,
+    FIND_USERS_SCHEMA,
 };
