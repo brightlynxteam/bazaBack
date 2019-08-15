@@ -14,20 +14,12 @@ router.post(ADD_ROOM_URL,
         try {
             let data = ctx.request.body;
             let res = await roomsQueries.addRoom(data);
-            if (res) {
-                ctx.status = 200;
-                ctx.body = {
-                    status: 'OK',
-                    message: 'Комната добавлена!',
-                    room: res
-                };
-            } else {
-                ctx.status = 404;
-                ctx.body = {
-                    status: 'error',
-                    message: 'Комната не добавлена'
-                }
-            }
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Комната добавлена!',
+                room: res
+            };
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
