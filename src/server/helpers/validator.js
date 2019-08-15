@@ -24,7 +24,7 @@ const GET_ONE_USER_SCHEMA = Joi
     })
     .min(1);
 
-const EDIT_USER = Joi
+const EDIT_USER_SCHEMA = Joi
     .object()
     .keys({
         id: Joi.number().integer().required(), 
@@ -33,12 +33,12 @@ const EDIT_USER = Joi
         first_name: Joi.string(),
         second_name: Joi.string(),
     })
-    .min(1)
+    .min(2)
 
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
-    EDIT_USER,
+    EDIT_USER_SCHEMA,
 };
 
 
