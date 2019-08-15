@@ -33,7 +33,7 @@ const EDIT_USER_SCHEMA = Joi
         first_name: Joi.string(),
         second_name: Joi.string(),
     })
-    .min(2)
+    .min(2);
 
 module.exports = {
     validate,
