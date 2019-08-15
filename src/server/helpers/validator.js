@@ -129,6 +129,18 @@ const FIND_USERS_SCHEMA = Joi
         order : Joi.string().default('ASC').valid('ASC, DESC'),
     });
 
+const EDIT_ROOM_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        number: Joi.number().integer().min(1),
+        description: Joi.string(),
+        active: Joi.boolean(),
+        housing: Joi.number().integer().min(1),
+        capacity: Joi.number().integer().min(1),
+    })
+    .min(2);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -143,4 +155,5 @@ module.exports = {
     EDIT_HOUSING_SCHEMA,
     ADD_RESERVATION_SCHEMA,
     FIND_USERS_SCHEMA,
+    EDIT_ROOM_SCHEMA,
 };
