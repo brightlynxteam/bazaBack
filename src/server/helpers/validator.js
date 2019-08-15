@@ -21,7 +21,7 @@ const GET_ONE_USER_SCHEMA = Joi
         id: Joi.number().integer().min(1),
         email: Joi.string().email(),
         phone_number: Joi.string().regex(/^\d+$/).min(11),
-    }).min(1);
+    });
 
 module.exports = {
     validate,
