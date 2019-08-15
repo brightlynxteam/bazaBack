@@ -1,34 +1,31 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
-const usersQueries = require('../db/queries/users');
+const roomsQueries = require('../db/queries/rooms');
 
 const router = new Router();
 
-const PREFIX_URL = '/user';
+const PREFIX_URL = '/rooms';
+const GET_ALL_ROOMS_URL = `${PREFIX_URL}/getallrooms`;
+const EDIT_ROOM_URL = `${PREFIX_URL}/editRoom`;
 
-const GET_ONE_USER_URL = `${PREFIX_URL}`;
-const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
-
-router.post(GET_ONE_USER_URL,
-    validator.validate(validator.GET_ONE_USER_SCHEMA),
+router.post(GET_ALL_ROOMS_URL,
+    validator.validate(validator.GET_ALL_ROOMS_SCHEMA),
     async (ctx) => {
-
         try {
             let data = ctx.request.body;
-            let res = await usersQueries.getOneUser(data);
-
+            let res = await roomsQueries.getAllRooms(data);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
-                    status: 'success',
-                    message: 'Пользователь получен',
-                    data: res
+                    status: 'OK',
+                    message: 'Данные о комнатах получены!',
+                    rooms: res
                 };
             } else {
                 ctx.status = 404;
                 ctx.body = {
                     status: 'error',
-                    message: 'Пользователь не найден'
+                    message: 'Комнаты не найдены'
                 }
             }
         } catch (err) {
@@ -39,36 +36,36 @@ router.post(GET_ONE_USER_URL,
             };
             console.log(err)
         }
-    })
-    .post(FIND_USERS_URL,
-    validator.validate(validator.FIND_USERS_SCHEMA), 
-    async (ctx) => {
+    });
 
+router.post(EDIT_ROOM_URL,
+    validator.validate(validator.EDIT_ROOM_SCHEMA),
+    async (ctx) => {
+        //TODO добавить валидацию пользователя
         try {
             let data = ctx.request.body;
-
-            let res = await usersQueries.findUsers(data)
+            let res = await roomsQueries.editRoom(data);
             if (res) {
-                 ctx.status = 200;
-                 ctx.body = {
-               	    status: 'success',
-                    message: 'Пользователи получены!',
-               	    users: res
-           	};
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Данные о комнате изменены!',
+                    room: res,
+                };
             } else {
                 ctx.status = 404;
                 ctx.body = {
                     status: 'error',
-                    message: 'Пользователь не найден.'
-                };
-            }          
+                    message: 'Комната не найдена'
+                }
+            }
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err) 
+            console.log(err)
         }
     });
 

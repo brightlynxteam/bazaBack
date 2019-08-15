@@ -11,6 +11,7 @@ let validate = schema => (ctx, next) => {
     };
     return;
   }
+  ctx.request.body = res.value;
   return next();
 };
 
@@ -38,8 +39,7 @@ const REGISTER_USER_SCHEMA = Joi.object()
     first_name: Joi.string().required(),
     second_name: Joi.string().required(),
     password: Joi.string().required()
-  })
-  .min(1);
+  });
     
 const LOGIN_SCHEMA = Joi
     .object()
@@ -48,7 +48,7 @@ const LOGIN_SCHEMA = Joi
         email: Joi.string().email(),
         password: Joi.string().required()
     })
-    .or('email', 'phone_number').min(1);
+    .or('email', 'phone_number');
 
 const GET_ALL_PAGES_SCHEMA = Joi.object()
   .keys({
@@ -58,8 +58,7 @@ const GET_ALL_PAGES_SCHEMA = Joi.object()
     order: Joi.string()
       .regex(/^(ASC|DESC)$/)
       .default('ASC')
-  })
-  .min(1);
+  });
 
 const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
   limit: Joi.number().default(10),
@@ -75,6 +74,73 @@ const ADD_PAGE_SCHEMA = Joi.object().keys({
   text: Joi.string().required()
 });
 
+const GET_ALL_SERVICES_SCHEMA = Joi.object().keys({
+  limit: Joi.number().default(10),
+  offset: Joi.number().default(0),
+  orderBy: Joi.string().default('id'),
+  order: Joi.string()
+    .regex(/^(ASC|DESC)$/)
+    .default('ASC')
+});
+
+const GET_SERVICE_SCHEMA = Joi.object().keys({
+    id: Joi.number().integer().min(1)
+    });
+
+const GET_ALL_ROOMS_SCHEMA = Joi
+    .object()
+    .keys({
+        limit : Joi.number().integer().min(1).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string().regex(/^(ASC|DESC)$/).default('ASC')
+    });
+
+const EDIT_HOUSING_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        number: Joi.number().integer().min(1),
+        description: Joi.string(),
+        photos: Joi.array().items(Joi.string().regex(/^.*\.+(jpg)$/)),
+    })
+    .min(2);
+
+const ADD_RESERVATION_SCHEMA = Joi
+    .object()
+    .keys({
+        room: Joi.number().integer(),
+        user: Joi.number().integer(),
+        start_date: Joi.number().integer(),
+        end_date: Joi.number().integer(),
+        bail: Joi.boolean(),
+        paid: Joi.boolean(),
+        active: Joi.boolean()
+    })
+    .required();
+
+const FIND_USERS_SCHEMA = Joi
+    .object()
+    .keys({
+        queryString: Joi.string().required(),
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order : Joi.string().default('ASC').valid('ASC, DESC'),
+    });
+
+const EDIT_ROOM_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        number: Joi.number().integer().min(1),
+        description: Joi.string(),
+        active: Joi.boolean(),
+        housing: Joi.number().integer().min(1),
+        capacity: Joi.number().integer().min(1),
+    })
+    .min(2);
+
 const GET_PAGE_SCHEMA = Joi.object()
     .keys({
         id: Joi.number()
@@ -89,6 +155,14 @@ module.exports = {
     REGISTER_USER_SCHEMA,
     GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
+    ADD_PAGE_SCHEMA,
+    GET_ALL_SERVICES_SCHEMA,
+    GET_SERVICE_SCHEMA,
+    GET_ALL_ROOMS_SCHEMA,
+    EDIT_HOUSING_SCHEMA,
+    ADD_RESERVATION_SCHEMA,
+    FIND_USERS_SCHEMA,
+    EDIT_ROOM_SCHEMA,
     ADD_PAGE_SCHEMA,
     GET_PAGE_SCHEMA
 };
