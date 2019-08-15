@@ -39,7 +39,7 @@ router.post(GET_ONE_USER_URL,
         }
     })
     .post(EDIT_USER_URL,
-    validator.validate(validator.EDIT_USER),
+    validator.validate(validator.EDIT_USER_SCHEMA),
     async (ctx) => {
 
         try {
@@ -52,7 +52,7 @@ router.post(GET_ONE_USER_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Профиль пользователя успешно изменен!',
-                    user: user
+                    user: res
                 };
             } else {
                 ctx.status = 404;
