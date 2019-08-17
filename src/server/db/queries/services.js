@@ -5,6 +5,7 @@ function editService(data) {
         .returning(['id', 'name', 'description', 'price', 'info'])
         .where({'id': data.id})
         .update(data)
+        .then( res => res[0] )
 }
 
 module.exports = {
