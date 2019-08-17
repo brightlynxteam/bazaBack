@@ -4,27 +4,10 @@ const usersQueries = require('../db/queries/users');
 async function updateTokens(id){
     const accessToken = await jwt.sign({ id }, process.env.SECRET_KEY ,{ expiresIn: '1h' });
     const refreshToken = await jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-    await usersQueries.signRefreshToken({ id , refreshToken });
+    await usersQueries.updateUser({id},{refresh_token: refreshToken});
     return {
         access_token: accessToken,
         refresh_token: refreshToken
-    }
-}
-
-
-async function checkExpireToken(token){
-    const decoded = await jwt.decode(token,{complete: true});
-    if (!decoded) {
-        return [true];
-    }
-    else {
-        const expireTime = decoded.payload.exp;
-        const currentTime = Date.now() / 1000;
-        if (currentTime >= expireTime){
-            return [true];
-        }else {
-            return [false,decoded.payload.id];
-        }
     }
 }
 
@@ -35,31 +18,47 @@ async function checkAuth(ctx,next) {
         if (!accessToken && !refreshToken){
             ctx.state.user = null;
         } else if (!accessToken && refreshToken){
-            const [ expireRefreshToken , id ] = await checkExpireToken(refreshToken);
-            if (expireRefreshToken) {
-                ctx.state.user = null;
+            const payload = await jwt.verify(refreshToken,process.env.SECRET_KEY);
+            const [user] = await usersQueries.getOneUser({id: payload.id});
+            if (user.refresh_token === refreshToken){
+                const { access_token, refresh_token } = await updateTokens(user.id);
+                ctx.cookies.set('access_token',access_token);
+                ctx.cookies.set('refresh_token',refresh_token);
+                ctx.state.user = user;
             } else {
-                const user = await usersQueries.getOneUser(id);
-                ctx.state.user = user ? user : null;
+                ctx.state.user = null;
             }
         } else if (accessToken && !refreshToken){
             ctx.state.user = null;
         } else if (accessToken && refreshToken){
-            const [expireAccessToken,id] = await checkExpireToken(accessToken);
-            const [expireRefreshToken] = await checkExpireToken(refreshToken);
+            const expireAccessToken = false;
+            const expireRefreshToken = false;
+            let payloadAccessToken = null;
+            let payloadRefreshToken = null;
+            try {
+                payloadAccessToken = await jwt.verify(accessToken,process.env.SECRET_KEY);
+            } catch (error) {
+                expireAccessToken = true;
+            }
+            try {
+                payloadRefreshToken = await jwt.verify(refreshToken,process.env.SECRET_KEY);
+            } catch (error) {
+                expireRefreshToken = true;
+            }
+
             if (expireAccessToken && !expireRefreshToken){
-                const newTokens = await updateTokens(id);
-                ctx.cookies.set('access_token',newTokens.access_token);
-                ctx.cookies.set('refresh_token',newTokens.refresh_token);
-                ctx.state.user = await usersQueries.getOneUser(id);
-            } else if (!expireAccessToken && expireRefreshToken) {
-                ctx.state.user = null;
-            } else if (expireAccessToken && expireRefreshToken) {
-                ctx.state.user = null;
+                const { access_token, refresh_token } = await updateTokens(payloadRefreshToken.id);
+                ctx.state.user = await usersQueries.getOneUser({id: payloadRefreshToken.id});
+                ctx.cookies.set('access_token',access_token);
+                ctx.cookies.set('refresh_token',refresh_token);
+            }
+            else if (!expireAccessToken && !expireRefreshToken){
+                ctx.state.user = await usersQueries.getOneUser({id: payloadAccessToken.id});
             } else {
-                ctx.state.user = await usersQueries.getOneUser(id);
+                ctx.state.user = null;
             }
         }
+        return next();
     } catch (error) {
         ctx.state.user = null;
         return next();

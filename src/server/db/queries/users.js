@@ -31,14 +31,14 @@ function register(data) {
     });
 }
 
-function signRefreshToken(data){
+function updateUser(opts,data){
   return knex('users')
-      .where('id',data.id)
-      .update('refresh_token',data.refreshToken);
+      .where('id',opts)
+      .update('refresh_token',data);
 }
 
 module.exports = {
   getOneUser,
   register,
-  signRefreshToken
+  updateUser
 };
