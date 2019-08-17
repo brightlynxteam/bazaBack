@@ -29,7 +29,7 @@ const ADD_SERVICE_SCHEMA = Joi
     .keys({
         name: Joi.string().required(),
         description: Joi.string().required(),
-        price: Joi.number().integer().required(),
+        price: Joi.string().required(),
         info: Joi.string().required()
     })
 
