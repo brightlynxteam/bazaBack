@@ -141,6 +141,13 @@ const EDIT_ROOM_SCHEMA = Joi
     })
     .min(2);
 
+const GET_PAGE_SCHEMA = Joi.object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    })
+    .min(1);
+
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -148,7 +155,6 @@ module.exports = {
     REGISTER_USER_SCHEMA,
     GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
-    ADD_PAGE_SCHEMA,
     GET_ALL_SERVICES_SCHEMA,
     GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,
@@ -156,4 +162,6 @@ module.exports = {
     ADD_RESERVATION_SCHEMA,
     FIND_USERS_SCHEMA,
     EDIT_ROOM_SCHEMA,
+    ADD_PAGE_SCHEMA,
+    GET_PAGE_SCHEMA
 };
