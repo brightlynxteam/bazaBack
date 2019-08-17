@@ -15,12 +15,12 @@ router.post(EDIT_SERVICE_URL,
             let data = ctx.request.body;
             let res = await servicesQueries.editService(data);
             
-            if (res[0]) {
+            if (res) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Услуга успешно изменена!',
-                    data: res[0]
+                    data: res
                 };
             } else {
                 ctx.status = 400;
