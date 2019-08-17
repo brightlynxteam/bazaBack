@@ -14,11 +14,6 @@ function getAllPages(data) {
     .select('id', 'topic', 'text', 'created_at', 'updated_at');
 }
 
-module.exports = {
-  getAllPages,
-  addPage
-};
-
 function getPage(id) {
     return knex('pages')
         .select('*')
@@ -27,5 +22,7 @@ function getPage(id) {
 }
 
 module.exports = {
-    getPage
+  getAllPages,
+  addPage,
+  getPage
 };
