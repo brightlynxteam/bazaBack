@@ -15,13 +15,13 @@ router.post(ADD_SERVICE_URL,
             let data = ctx.request.body;
             let res = await servicesQueries.addService(data);
 
-            if (res[0]) { 
+            if (res) { 
 
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
                     message: 'Услуга добавлена!',
-                    data: res[0]
+                    data: res
                 };
             } else {
                 ctx.status = 400;
