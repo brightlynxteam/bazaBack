@@ -30,7 +30,7 @@ const EDIT_SERVICE_SCHEMA = Joi
         id: Joi.number().integer().min(1).required(),
         name: Joi.string(),
         description: Joi.string(),
-        price: Joi.number().integer(),
+        price: Joi.string(),
         info: Joi.string()
     })
     .or('name','description','price','info')
