@@ -12,19 +12,16 @@ router.post(GET_ONE_USER_URL,
     async (ctx) => {
 
         try {
-            let user = ctx.state.user; 
-            if(!user) {
-                ctx.status = 403;
-                ctx.body = {
-                    status: 'error',
-                    message: 'Доступ запрещен'
-                }
-                return;
+            let data = ctx.request.body;
+            
+            let empty = true;
+            for(var key in data)
+            {
+                empty = false;
             }
 
-            let data = ctx.request.body;
-            if (!data) {
-                data = { id: user.id };
+            if (empty) {
+                data = { id: ctx.state.user.id };
             }
 
             let res = await usersQueries.getOneUser(data);
