@@ -156,6 +156,12 @@ const GET_ALL_USERS_SCHEMA = Joi
         order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
     });
 
+const GET_HOUSING_SCHEMA = Joi
+  .object()
+  .keys({
+    id: Joi.number().integer().required().min(1)
+  });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -173,4 +179,5 @@ module.exports = {
     ADD_PAGE_SCHEMA,
     GET_PAGE_SCHEMA,
     GET_ALL_USERS_SCHEMA,
+    GET_HOUSING_SCHEMA,
 };
