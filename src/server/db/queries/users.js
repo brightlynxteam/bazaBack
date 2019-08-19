@@ -41,8 +41,34 @@ function register(data) {
     });
 }
 
+function findUsers(data) {
+    return knex('users')
+        .whereRaw(`
+            to_tsvector('russian', first_name) || 
+            to_tsvector('russian', second_name) || 
+            to_tsvector('russian', email) ||
+            to_tsvector('russian', phone_number) @@ 
+            plainto_tsquery('russian', '${data.queryString}')
+            `
+        )    
+        .select('id','phone_number','email','first_name','second_name', 'created_at', 'updated_at')
+        .orderBy(data.orderBy, data.order)
+        .limit(data.limit)
+        .offset(data.offset);
+}
+
+function getAllUsers(data) {
+    return knex('users')
+        .limit(data.limit)
+        .offset(data.offset)
+        .orderBy(data.orderBy, data.order)
+        .select('id','email','phone_number','first_name','second_name', 'created_at', 'updated_at');
+}
+
 module.exports = {
-    getOneUser,
-    register,
-    login
+  getOneUser,
+  register,
+  findUsers,
+  getAllUsers,
+  login
 };

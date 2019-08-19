@@ -15,7 +15,15 @@ async function editHousing(data) {
         .update(data);
 }
 
+function getHousing(data) {
+  return knex('housings')
+  .where({
+    id : data.id
+  }) 
+}
+
 module.exports = {
   getAllHousings,
-  editHousing
+  editHousing,
+  getHousing
 };

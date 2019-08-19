@@ -1,11 +1,13 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const housingsQueries = require('../db/queries/housings');
+
 const router = new Router();
 
 const PREFIX_URL = '/housings';
 const GET_ALL_HOUSINGS_URL = `${PREFIX_URL}/getAllHousings`;
 const EDIT_HOUSING_URL = `${PREFIX_URL}/editHousing`;
+const GET_HOUSING_URL = `${PREFIX_URL}/getHousing`;
 
 router.post(
   GET_ALL_HOUSINGS_URL,
@@ -57,8 +59,39 @@ router.post(EDIT_HOUSING_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
         }
     });
+
+router.post(GET_HOUSING_URL,
+  validator.validate(validator.GET_HOUSING_SCHEMA),
+  async (ctx) => {
+    try {
+      const data = ctx.request.body;
+      const res = await housingsQueries.getHousing(data);
+      if (res.length > 0) {
+        ctx.status = 200;
+        ctx.body = {
+          status: 'OK',
+          message: 'Данные о корпусе получены!',
+          housing: res,
+        };
+      } else {
+        ctx.status = 404;
+        ctx.body = {
+          status: 'error',
+          message: 'Корпус не найден',
+        };
+        console.log(ctx.body.message);
+      }
+    } catch (err) {
+      ctx.status = 500;
+      ctx.body = {
+        status: 'error',
+        message: 'Внутренняя ошибка сервера.',
+      };
+      console.log(err);
+    }
+  });
 
 module.exports = router;
