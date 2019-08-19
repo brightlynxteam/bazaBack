@@ -63,10 +63,10 @@ router.post(LOGIN_URL,
                 return
             }
 
-            let wrongPassword = await authHelper.comparePassword(data.password, user.password);
+            let rightPassword = await authHelper.comparePassword(data.password, user.password);
 
             let res = await usersQueries.getOneUser(user);
-            if (wrongPassword && res) {
+            if (rightPassword && res) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
