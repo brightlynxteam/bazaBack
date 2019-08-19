@@ -47,8 +47,17 @@ function findUsers(data) {
         .offset(data.offset);
 }
 
+function getAllUsers(data) {
+    return knex('users')
+        .limit(data.limit)
+        .offset(data.offset)
+        .orderBy(data.orderBy, data.order)
+        .select('id','email','phone_number','first_name','second_name', 'created_at', 'updated_at');
+}
+
 module.exports = {
   getOneUser,
   register,
-  findUsers
+  findUsers,
+  getAllUsers
 };

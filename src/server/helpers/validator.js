@@ -147,6 +147,14 @@ const GET_PAGE_SCHEMA = Joi.object()
     })
     .min(1);
 
+const GET_ALL_USERS_SCHEMA = Joi
+    .object()
+    .keys({
+        limit : Joi.number().integer().min(1).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
+    });
 
 module.exports = {
     validate,
@@ -163,5 +171,6 @@ module.exports = {
     FIND_USERS_SCHEMA,
     EDIT_ROOM_SCHEMA,
     ADD_PAGE_SCHEMA,
-    GET_PAGE_SCHEMA
+    GET_PAGE_SCHEMA,
+    GET_ALL_USERS_SCHEMA,
 };
