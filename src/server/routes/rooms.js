@@ -26,7 +26,7 @@ router.post(ADD_ROOM_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
         }
     });
 
