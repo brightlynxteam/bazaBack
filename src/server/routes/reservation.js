@@ -36,7 +36,6 @@ router.post(EDIT_RESERVATION_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
         }
     }
 );
