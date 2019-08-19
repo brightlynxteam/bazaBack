@@ -37,8 +37,8 @@ router.post(GET_ONE_USER_URL,
             };
             console.log(err)
         }
-    })
-    .post(EDIT_USER_URL,
+    });
+router.post(EDIT_USER_URL,
     validator.validate(validator.EDIT_USER_SCHEMA),
     async (ctx) => {
 
