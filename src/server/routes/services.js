@@ -28,7 +28,7 @@ router.post(ADD_SERVICE_URL,
                 ctx.body = {
                     status: 'error',
                     message: 'Услуга не добавлена!'
-                }
+                };
             }
         } catch (err) {
             ctx.status = 500;
@@ -36,7 +36,8 @@ router.post(ADD_SERVICE_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            
+            console.log(err);
         }
     });
 
