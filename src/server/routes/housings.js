@@ -29,6 +29,7 @@ router.post(ADD_HOUSING_URL,
                 }
             }
         } catch (error) {
+            console.log(error);
             ctx.status = 500;
             ctx.body = {
                 status: 'Error',
