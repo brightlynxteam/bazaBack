@@ -162,6 +162,17 @@ const GET_HOUSING_SCHEMA = Joi
     id: Joi.number().integer().required().min(1)
   });
 
+const EDIT_USER_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().required(), 
+        phone_number: Joi.string().regex(/^\d+$/).min(11),
+        email: Joi.string().email(),
+        first_name: Joi.string(),
+        second_name: Joi.string(),
+    })
+    .min(2);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -180,4 +191,5 @@ module.exports = {
     GET_PAGE_SCHEMA,
     GET_ALL_USERS_SCHEMA,
     GET_HOUSING_SCHEMA,
+    EDIT_USER_SCHEMA,
 };

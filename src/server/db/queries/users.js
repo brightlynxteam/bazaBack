@@ -65,10 +65,17 @@ function getAllUsers(data) {
         .select('id','email','phone_number','first_name','second_name', 'created_at', 'updated_at');
 }
 
+function editUser(id, data) {
+    return knex('users')
+        .where({'id': id})
+        .update(data)
+}
+
 module.exports = {
   getOneUser,
   register,
   findUsers,
   getAllUsers,
-  login
+  login,
+  editUser
 };

@@ -9,6 +9,7 @@ const PREFIX_URL = '/user';
 const GET_ONE_USER_URL = `${PREFIX_URL}`;
 const GET_ALL_USERS_URL = `${PREFIX_URL}/getAllUsers`;
 const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
+const EDIT_USER_URL = `${PREFIX_URL}/editProfile`;
 
 router.post(GET_ONE_USER_URL,
   validator.validate(validator.GET_ONE_USER_SCHEMA),
@@ -101,6 +102,39 @@ router.post(FIND_USERS_URL,
                 message: 'Внутренняя ошибка сервера.'
             };
             console.log(err) 
+        }
+    });
+
+router.post(EDIT_USER_URL,
+    validator.validate(validator.EDIT_USER_SCHEMA),
+    async (ctx) => {
+
+        try {
+            let data = ctx.request.body;
+            let id = data.id;
+            delete data.id;
+            let res = await usersQueries.editUser(id, data);
+            if (res) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
+                    message: 'Профиль пользователя успешно изменен!',
+                    user: res
+                };
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Пользователь не найден'
+                };
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err)
         }
     });
 
