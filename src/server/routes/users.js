@@ -13,14 +13,8 @@ router.post(GET_ONE_USER_URL,
 
         try {
             let data = ctx.request.body;
-            
-            let empty = true;
-            for(var key in data)
-            {
-                empty = false;
-            }
 
-            if (empty) {
+            if (!Object.keys(data).length) {
                 data = { id: ctx.state.user.id };
             }
 
