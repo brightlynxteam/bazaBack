@@ -14,20 +14,20 @@ router.post(EDIT_PAGE_URL,
         try {
             let data = ctx.request.body;
             let res = await pagesQueries.editPage(data);
-            if (res[0]) {
-                
+            
+            if (res) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Страница изменена!',
-                    data: page[0]
+                    data: res
                 };
             } else {
                 ctx.status = 400;
                 ctx.body = {
                     status: 'error',
                     message: 'Некорректные данные'
-                }
+                };
             }
         } catch (err) {
             ctx.status = 500;
@@ -35,7 +35,7 @@ router.post(EDIT_PAGE_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
         }
     });
 
