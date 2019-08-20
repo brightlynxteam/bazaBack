@@ -33,7 +33,7 @@ const EDIT_SERVICE_SCHEMA = Joi
         price: Joi.string(),
         info: Joi.string()
     })
-    .or('name','description','price','info')
+    .or('name','description','price','info');
 
 module.exports = {
     validate,
