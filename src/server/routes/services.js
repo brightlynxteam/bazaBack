@@ -27,7 +27,7 @@ router.post(EDIT_SERVICE_URL,
                 ctx.body = {
                     status: 'error',
                     message: 'Услуга не изменена!'
-                }
+                };
             }
         } catch (err) {
             ctx.status = 500;
@@ -35,7 +35,7 @@ router.post(EDIT_SERVICE_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
         }
     });
 
