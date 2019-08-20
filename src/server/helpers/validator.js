@@ -31,7 +31,7 @@ const EDIT_PAGE_SCHEMA = Joi
         topic: Joi.string(),
         text: Joi.string()
     })
-    .min(1).or('topic', 'text');
+    .or('topic', 'text');
 
 
 module.exports = {
