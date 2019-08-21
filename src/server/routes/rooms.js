@@ -58,15 +58,15 @@ router.post(
           status: 'error',
           message: 'Комната не найдена'
         }
-      }
+      };
     } catch (err) {
       ctx.status = 500;
       ctx.body = {
         status: 'error',
         message: 'Внутренняя ошибка сервера.'
       };
-      console.log(err)
-    }
+      console.log(err);
+    };
   }
 );
 
