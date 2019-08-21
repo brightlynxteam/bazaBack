@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
             table.string('first_name', 255).notNullable();
             table.string('second_name', 255).notNullable();
             table.string('refresh_token', 255).defaultTo('').notNullable();
+            table.boolean('is_admin').defaultTo(false);
             table.integer('created_at').defaultTo(knex.raw('extract(epoch from now())'));
             table.integer('updated_at').defaultTo(knex.raw('extract(epoch from now())'));
         })
