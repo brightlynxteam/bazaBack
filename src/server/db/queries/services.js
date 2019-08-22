@@ -13,7 +13,24 @@ function getService(id) {
         .where('id', id);
 }
 
+function addService(data) {
+    return knex('services')
+        .insert(data)
+	.returning(['id', 'name', 'description', 'price', 'info'])
+	.then(res => res[0]);
+}
+
+function editService(data) {
+    return knex('services')
+        .where({'id': data.id})
+        .update(data)
+        .returning(['id', 'name', 'description', 'price', 'info'])
+        .then(res => res[0]);
+}
+
 module.exports = {
   getAllServices,
-  getService
+  getService,
+	addService,
+  editService,
 };

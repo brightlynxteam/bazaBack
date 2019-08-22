@@ -14,7 +14,27 @@ function getAllPages(data) {
     .select('id', 'topic', 'text', 'created_at', 'updated_at');
 }
 
+function getPage(id) {
+    return knex('pages')
+        .select('*')
+        .where ({id: id})
+        .first();
+}
+
+function editPage(data) {
+    return knex('pages')
+        .where({ 'id': data.id })
+        .update({
+            topic: data.topic,
+            text : data.text
+        })
+        .returning(['id', 'topic', 'text','created_at', 'updated_at'])
+        .then(res => res[0]);
+}
+
 module.exports = {
   getAllPages,
-  addPage
+  addPage,
+  getPage,
+  editPage,
 };
