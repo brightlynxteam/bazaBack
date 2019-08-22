@@ -8,6 +8,7 @@ const PREFIX_URL = '/housings';
 const GET_ALL_HOUSINGS_URL = `${PREFIX_URL}/getAllHousings`;
 const EDIT_HOUSING_URL = `${PREFIX_URL}/editHousing`;
 const GET_HOUSING_URL = `${PREFIX_URL}/getHousing`;
+const ADD_HOUSING_URL = `${PREFIX_URL}/addHousing`;
 
 router.post(
   GET_ALL_HOUSINGS_URL,
@@ -93,5 +94,37 @@ router.post(GET_HOUSING_URL,
       console.log(err);
     }
   });
+
+router.post(ADD_HOUSING_URL,
+    validator.validate(validator.ADD_HOUSING_SCHEMA),
+    async (ctx) => {
+
+        try {
+            let data = ctx.request.body;
+            let res = await housingsQueries.addHousing(data);
+            if (res) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Корпус добавлен!',
+                    photos: res
+                }
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'Error',
+                    message: 'Корпус не удалось добавить!'
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутреняя ошибка сервера.'
+            }
+            console.log(err);
+        }    
+    });
 
 module.exports = router;

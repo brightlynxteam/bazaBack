@@ -22,8 +22,15 @@ function getHousing(data) {
   }) 
 }
 
+function addHousing(data){
+    return knex('housings')
+        .insert(data)
+        .returning(['id','number','description','photos'])
+}
+
 module.exports = {
   getAllHousings,
   editHousing,
-  getHousing
+  getHousing,
+  addHousing
 };

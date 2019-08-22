@@ -226,6 +226,14 @@ const EDIT_RESERVATION_SCHEMA = Joi
     })
     .or('room', 'user', 'start_date', 'end_date', 'bail', 'paid', 'active').min(1);
 
+const ADD_HOUSING_SCHEMA = Joi
+    .object()
+    .keys({
+        number: Joi.number().required(),
+        description: Joi.string().required(),
+        photos: Joi.array().required()
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -250,4 +258,5 @@ module.exports = {
     EDIT_SERVICE_SCHEMA,
     ADD_ROOM_SCHEMA,
     EDIT_RESERVATION_SCHEMA,
+    ADD_HOUSING_SCHEMA,
 };
