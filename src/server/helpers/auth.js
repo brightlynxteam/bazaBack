@@ -1,13 +1,13 @@
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 
 async function getHash(plaintextPassword) {
 
-	return  await bcrypt.hash(plaintextPassword, 10);
+	return await bcrypt.hash(plaintextPassword, 10);
 }
 
 async function comparePassword(plaintextPassword,passwordHash) {
-	
+
 	return await bcrypt.compare(plaintextPassword, passwordHash);
 }
 

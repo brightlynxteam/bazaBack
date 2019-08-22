@@ -8,7 +8,6 @@ function editReservation(data) {
         .then(res => res[0]);
 }
 
-module.exports = {
 function addReservation(data){
     return knex('reservation')
         .insert(data)

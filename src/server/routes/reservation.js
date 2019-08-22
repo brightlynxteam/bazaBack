@@ -4,8 +4,8 @@ const reservationQueries = require('../db/queries/reservation');
 const router = new Router();
 
 const PREFIX_URL = '/reservation';
-
 const ADD_RESERVATION_URL = `${PREFIX_URL}/addReservation`;
+const EDIT_RESERVATION_URL = `${PREFIX_URL}/editReservation`;
 
 router.post(ADD_RESERVATION_URL,
     validator.validate(validator.ADD_RESERVATION_SCHEMA),
@@ -41,14 +41,6 @@ router.post(ADD_RESERVATION_URL,
         }
     }
 );
-
-const Router = require('koa-router');
-const validator = require('../helpers/validator');
-const reservationQueries = require('../db/queries/reservation');
-const router = new Router();
-
-const PREFIX_URL = '/reservation';
-const EDIT_RESERVATION_URL = `${PREFIX_URL}/editReservation`;
 
 router.post(EDIT_RESERVATION_URL,
     validator.validate(validator.EDIT_RESERVATION_SCHEMA),
