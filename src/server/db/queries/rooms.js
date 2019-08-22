@@ -23,8 +23,15 @@ async function addRoom(data) {
         .then(res => res[0]);
 }
 
+async function getOneRoom(data) {
+  return knex('rooms')
+    .where({ id: data.id })
+    .select('id', 'number', 'description', 'active', 'housing', 'capacity');
+};
+
 module.exports = {
     getAllRooms,
     editRoom,
     addRoom,
+    getOneRoom,
 };

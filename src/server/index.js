@@ -23,6 +23,7 @@ const housingsRoutes = require('./routes/housings');
 const servicesRoutes = require('./routes/services');
 const roomsRoutes = require('./routes/rooms');
 const reservationRoutes = require('./routes/reservation');
+const usersRoutes = require('./routes/users');
 
 app.use(usersRoutes.routes());
 app.use(authRoutes.routes());
