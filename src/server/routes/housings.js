@@ -123,6 +123,7 @@ router.post(ADD_HOUSING_URL,
                 status: 'Error',
                 message: 'Внутреняя ошибка сервера.'
             }
+            console.log(err);
         }    
     });
 
