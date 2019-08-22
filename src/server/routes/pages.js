@@ -8,6 +8,7 @@ const PREFIX_URL = `/pages`;
 const GET_PAGE_URL = `${PREFIX_URL}/getPage`;
 const GET_ALL_PAGES_URL = `${PREFIX_URL}/getAllPages`;
 const ADD_PAGE_URL = `${PREFIX_URL}/addPage`;
+const EDIT_PAGE_URL = `${PREFIX_URL}/editPage`;
 
 router.post(
   ADD_PAGE_URL,
@@ -67,7 +68,6 @@ router.post(GET_PAGE_URL,
     }
 );
 
-
 router.post(
   GET_ALL_PAGES_URL,
   validator.validate(validator.GET_ALL_PAGES_SCHEMA),
@@ -90,5 +90,37 @@ router.post(
     }
   }
 );
+
+router.post(EDIT_PAGE_URL,
+    validator.validate(validator.EDIT_PAGE_SCHEMA),
+    async (ctx) => {
+
+        try {
+            let data = ctx.request.body;
+            let res = await pagesQueries.editPage(data);
+            
+            if (res) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Страница изменена!',
+                    data: res
+                };
+            } else {
+                ctx.status = 400;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Некорректные данные'
+                };
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err);
+        }
+    });
 
 module.exports = router;

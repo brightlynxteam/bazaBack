@@ -173,6 +173,15 @@ const EDIT_USER_SCHEMA = Joi
     })
     .min(2);
 
+const EDIT_PAGE_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        topic: Joi.string(),
+        text: Joi.string()
+    })
+    .or('topic', 'text');
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -192,4 +201,5 @@ module.exports = {
     GET_ALL_USERS_SCHEMA,
     GET_HOUSING_SCHEMA,
     EDIT_USER_SCHEMA,
+    EDIT_PAGE_SCHEMA,
 };
