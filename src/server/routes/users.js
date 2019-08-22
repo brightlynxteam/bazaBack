@@ -5,8 +5,7 @@ const usersQueries = require('../db/queries/users');
 const router = new Router();
 
 const PREFIX_URL = '/user';
-
-const GET_ONE_USER_URL = `${PREFIX_URL}`;
+const GET_ONE_USER_URL = `${PREFIX_URL}/getOneUser`;
 const GET_ALL_USERS_URL = `${PREFIX_URL}/getAllUsers`;
 const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
 const EDIT_USER_URL = `${PREFIX_URL}/editProfile`;
@@ -16,7 +15,10 @@ router.post(GET_ONE_USER_URL,
   async (ctx) => {
     try {
       const data = ctx.request.body;
-      const res = await usersQueries.getOneUser(data);
+      if (!Object.keys(data).length) {
+          data = { id: ctx.state.user.id };
+      }
+      let res = await usersQueries.getOneUser(data);
       if (res) {
         ctx.status = 200;
         ctx.body = {
@@ -79,7 +81,6 @@ router.post(FIND_USERS_URL,
 
         try {
             let data = ctx.request.body;
-
             let res = await usersQueries.findUsers(data)
             if (res) {
                  ctx.status = 200;
