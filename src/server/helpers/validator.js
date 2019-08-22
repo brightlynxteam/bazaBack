@@ -182,6 +182,15 @@ const EDIT_PAGE_SCHEMA = Joi
     })
     .or('topic', 'text');
 
+const ADD_SERVICE_SCHEMA = Joi
+    .object()
+    .keys({
+        name: Joi.string().required(),
+        description: Joi.string().required(),
+        price: Joi.string().required(),
+        info: Joi.string().required()
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -202,4 +211,5 @@ module.exports = {
     GET_HOUSING_SCHEMA,
     EDIT_USER_SCHEMA,
     EDIT_PAGE_SCHEMA,
+    ADD_SERVICE_SCHEMA,
 };
