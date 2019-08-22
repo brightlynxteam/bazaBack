@@ -191,6 +191,17 @@ const ADD_SERVICE_SCHEMA = Joi
         info: Joi.string().required()
     });
 
+const EDIT_SERVICE_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        name: Joi.string(),
+        description: Joi.string(),
+        price: Joi.string(),
+        info: Joi.string()
+    })
+    .or('name','description','price','info');
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -212,4 +223,5 @@ module.exports = {
     EDIT_USER_SCHEMA,
     EDIT_PAGE_SCHEMA,
     ADD_SERVICE_SCHEMA,
+    EDIT_SERVICE_SCHEMA
 };
