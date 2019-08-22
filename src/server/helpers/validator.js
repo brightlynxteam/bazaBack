@@ -212,6 +212,20 @@ const ADD_ROOM_SCHEMA = Joi
         capacity: Joi.number().integer().min(1).required(),
     });
 
+const EDIT_RESERVATION_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        room: Joi.number().integer(),
+        user: Joi.number().integer(),
+        start_date: Joi.number().integer(),
+        end_date: Joi.number().integer(),
+        bail: Joi.boolean(),
+        paid: Joi.boolean(),
+        active: Joi.boolean()
+    })
+    .or('room', 'user', 'start_date', 'end_date', 'bail', 'paid', 'active').min(1);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -235,4 +249,5 @@ module.exports = {
     ADD_SERVICE_SCHEMA,
     EDIT_SERVICE_SCHEMA,
     ADD_ROOM_SCHEMA,
+    EDIT_RESERVATION_SCHEMA,
 };
