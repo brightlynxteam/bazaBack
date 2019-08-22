@@ -1,11 +1,11 @@
 const knex = require('../connection');
 
 function getAllServices(data) {
-  return knex('services')
-      .limit(data.limit)
-      .offset(data.offset)
-      .orderBy(data.orderBy, data.order)
-      .select('id', 'name', 'description', 'price', 'info');
+    return knex('services')
+        .limit(data.limit)
+        .offset(data.offset)
+        .orderBy(data.orderBy, data.order)
+        .select('id', 'name', 'description', 'price', 'info');
 }
 
 function getService(id) {
@@ -16,8 +16,8 @@ function getService(id) {
 function addService(data) {
     return knex('services')
         .insert(data)
-	.returning(['id', 'name', 'description', 'price', 'info'])
-	.then(res => res[0]);
+        .returning(['id', 'name', 'description', 'price', 'info'])
+        .then(res => res[0]);
 }
 
 function editService(data) {
@@ -29,8 +29,8 @@ function editService(data) {
 }
 
 module.exports = {
-  getAllServices,
-  getService,
-	addService,
-  editService,
+    getAllServices,
+    getService,
+    addService,
+    editService,
 };

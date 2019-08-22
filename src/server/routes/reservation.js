@@ -17,7 +17,7 @@ router.post(ADD_RESERVATION_URL,
             let data = ctx.request.body;
             let reservation = await reservationQueries.addReservation(data);
 
-            if (reservation){
+            if (reservation) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
@@ -52,7 +52,7 @@ router.post(EDIT_RESERVATION_URL,
             let data = ctx.request.body;
             let reservation = await reservationQueries.editReservation(data);
 
-            if (reservation){
+            if (reservation) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',

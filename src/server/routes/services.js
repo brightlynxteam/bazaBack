@@ -9,28 +9,28 @@ const GET_ALL_SERVICES_URL = `${PREFIX_URL}/getAllServices`;
 const GET_SERVICE_URL = `${PREFIX_URL}/getService`;
 const ADD_SERVICE_URL = `${PREFIX_URL}/addService`;
 const EDIT_SERVICE_URL = `${PREFIX_URL}/editService`;
-            
+
 router.post(
-  GET_ALL_SERVICES_URL,
-  validator.validate(validator.GET_ALL_SERVICES_SCHEMA),
-  async ctx => {
-    try {
-      let data = ctx.request.body;
-      let services = await servicesQueries.getAllServices(data);
-      ctx.status = 200;
-      ctx.body = {
-        status: 'OK',
-        message: 'Данные об услугах получены!',
-        services
-      };
-    } catch (err) {
-      ctx.status = 500;
-      ctx.body = {
-        status: 'Error',
-        message: 'Внутренняя ошибка сервера.'
-      };
-    }
-  });
+    GET_ALL_SERVICES_URL,
+    validator.validate(validator.GET_ALL_SERVICES_SCHEMA),
+    async ctx => {
+        try {
+            let data = ctx.request.body;
+            let services = await servicesQueries.getAllServices(data);
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Данные об услугах получены!',
+                services
+            };
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+        }
+    });
 
 router.post(GET_SERVICE_URL,
     validator.validate(validator.GET_SERVICE_SCHEMA),
@@ -72,7 +72,7 @@ router.post(ADD_SERVICE_URL,
             let data = ctx.request.body;
             let res = await servicesQueries.addService(data);
 
-            if (res) { 
+            if (res) {
 
                 ctx.status = 200;
                 ctx.body = {

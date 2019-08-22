@@ -11,31 +11,32 @@ const ADD_PAGE_URL = `${PREFIX_URL}/addPage`;
 const EDIT_PAGE_URL = `${PREFIX_URL}/editPage`;
 
 router.post(
-  ADD_PAGE_URL,
-  validator.validate(validator.ADD_PAGE_SCHEMA),
-  async ctx => {
-    try {
-      let data = ctx.request.body;
-      let page = await pagesQueries.addPage(data);
-      ctx.status = 200;
-      ctx.body = {
-        status: 'OK',
-        message: 'Страница добавлена',
-        page
-        };
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = {
-        status: 'Error',
-        message: 'Внутренняя ошибка сервера.'
-      };
+    ADD_PAGE_URL,
+    validator.validate(validator.ADD_PAGE_SCHEMA),
+    async ctx => {
+        try {
+            let data = ctx.request.body;
+            let page = await pagesQueries.addPage(data);
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Страница добавлена',
+                page
+            };
+        } catch (error) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(error);
+        }
     }
-  }
 );
 
 router.post(GET_PAGE_URL,
     validator.validate(validator.GET_PAGE_SCHEMA),
-    async(ctx) => {
+    async (ctx) => {
         try {
 
             let dataObj = ctx.request.body;
@@ -69,26 +70,27 @@ router.post(GET_PAGE_URL,
 );
 
 router.post(
-  GET_ALL_PAGES_URL,
-  validator.validate(validator.GET_ALL_PAGES_SCHEMA),
-  async ctx => {
-    try {
-      let data = ctx.request.body;
-      let pages = await pagesQueries.getAllPages(data);
-      ctx.status = 200;
-      ctx.body = {
-        status: 'OK',
-        message: 'Страницы получены',
-        pages
-      };
-    } catch (error) {
-      ctx.status = 500;
-      ctx.body = {
-        status: 'Error',
-        message: 'Внутренняя ошибка сервера.'
-      };
+    GET_ALL_PAGES_URL,
+    validator.validate(validator.GET_ALL_PAGES_SCHEMA),
+    async ctx => {
+        try {
+            let data = ctx.request.body;
+            let pages = await pagesQueries.getAllPages(data);
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Страницы получены',
+                pages
+            };
+        } catch (error) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(error);
+        }
     }
-  }
 );
 
 router.post(EDIT_PAGE_URL,
@@ -98,7 +100,7 @@ router.post(EDIT_PAGE_URL,
         try {
             let data = ctx.request.body;
             let res = await pagesQueries.editPage(data);
-            
+
             if (res) {
                 ctx.status = 200;
                 ctx.body = {

@@ -1,4 +1,4 @@
-const { onUpdateTrigger } = require('../../../../knexfile');
+const {onUpdateTrigger} = require('../../../../knexfile');
 exports.up = function (knex, Promise) {
 
     return knex.schema

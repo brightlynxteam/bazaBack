@@ -11,37 +11,37 @@ const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
 const EDIT_USER_URL = `${PREFIX_URL}/editProfile`;
 
 router.post(GET_ONE_USER_URL,
-  validator.validate(validator.GET_ONE_USER_SCHEMA),
-  async (ctx) => {
-    try {
-      const data = ctx.request.body;
-      if (!Object.keys(data).length) {
-          data = { id: ctx.state.user.id };
-      }
-      let res = await usersQueries.getOneUser(data);
-      if (res) {
-        ctx.status = 200;
-        ctx.body = {
-          status: 'success',
-          message: 'Пользователь получен',
-          data: res,
-        };
-      } else {
-        ctx.status = 404;
-        ctx.body = {
-          status: 'error',
-          message: 'Пользователь не найден',
-        };
-      }
-    } catch (err) {
-      ctx.status = 500;
-      ctx.body = {
-        status: 'error',
-        message: 'Внутренняя ошибка сервера.',
-      };
-      console.log(err);
-    }
-  });
+    validator.validate(validator.GET_ONE_USER_SCHEMA),
+    async (ctx) => {
+        try {
+            const data = ctx.request.body;
+            if (!Object.keys(data).length) {
+                data = {id: ctx.state.user.id};
+            }
+            let res = await usersQueries.getOneUser(data);
+            if (res) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
+                    message: 'Пользователь получен',
+                    data: res,
+                };
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Пользователь не найден',
+                };
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.',
+            };
+            console.log(err);
+        }
+    });
 
 router.post(GET_ALL_USERS_URL,
     validator.validate(validator.GET_ALL_USERS_SCHEMA),
@@ -76,33 +76,33 @@ router.post(GET_ALL_USERS_URL,
 );
 
 router.post(FIND_USERS_URL,
-    validator.validate(validator.FIND_USERS_SCHEMA), 
+    validator.validate(validator.FIND_USERS_SCHEMA),
     async (ctx) => {
 
         try {
             let data = ctx.request.body;
             let res = await usersQueries.findUsers(data)
             if (res) {
-                 ctx.status = 200;
-                 ctx.body = {
-               	    status: 'success',
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
                     message: 'Пользователи получены!',
-               	    users: res
-           	};
+                    users: res
+                };
             } else {
                 ctx.status = 404;
                 ctx.body = {
                     status: 'error',
                     message: 'Пользователь не найден.'
                 };
-            }          
+            }
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err) 
+            console.log(err);
         }
     });
 
@@ -135,7 +135,7 @@ router.post(EDIT_USER_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
         }
     });
 

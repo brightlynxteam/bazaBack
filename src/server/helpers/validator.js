@@ -1,45 +1,45 @@
 const Joi = require('joi');
 
 let validate = schema => (ctx, next) => {
-  let res = Joi.validate(ctx.request.body, schema);
-  if (res.error !== null) {
-    console.log(res.error);
-    ctx.status = 400;
-    ctx.body = {
-      status: 'error',
-      message: 'Введены некорректные данные!'
-    };
-    return;
-  }
-  ctx.request.body = res.value;
-  return next();
+    let res = Joi.validate(ctx.request.body, schema);
+    if (res.error !== null) {
+        console.log(res.error);
+        ctx.status = 400;
+        ctx.body = {
+            status: 'error',
+            message: 'Введены некорректные данные!'
+        };
+        return;
+    }
+    ctx.request.body = res.value;
+    return next();
 };
 
 const GET_ONE_USER_SCHEMA = Joi.object()
-  .keys({
-    id: Joi.number()
-      .integer()
-      .min(1),
-    email: Joi.string().email(),
-    phone_number: Joi.string()
-      .regex(/^\d+$/)
-      .min(10)
-  })
-  .min(1);
+    .keys({
+        id: Joi.number()
+            .integer()
+            .min(1),
+        email: Joi.string().email(),
+        phone_number: Joi.string()
+            .regex(/^\d+$/)
+            .min(10)
+    })
+    .min(1);
 
 const REGISTER_USER_SCHEMA = Joi.object()
-  .keys({
-    phone_number: Joi.string()
-      .regex(/^\d+$/)
-      .length(11)
-      .required(),
-    email: Joi.string()
-      .email()
-      .required(),
-    first_name: Joi.string().required(),
-    second_name: Joi.string().required(),
-    password: Joi.string().required()
-  });
+    .keys({
+        phone_number: Joi.string()
+            .regex(/^\d+$/)
+            .length(11)
+            .required(),
+        email: Joi.string()
+            .email()
+            .required(),
+        first_name: Joi.string().required(),
+        second_name: Joi.string().required(),
+        password: Joi.string().required()
+    });
 
 const LOGIN_SCHEMA = Joi
     .object()
@@ -51,46 +51,46 @@ const LOGIN_SCHEMA = Joi
     .or('email', 'phone_number');
 
 const GET_ALL_PAGES_SCHEMA = Joi.object()
-  .keys({
+    .keys({
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string()
+            .regex(/^(ASC|DESC)$/)
+            .default('ASC')
+    });
+
+const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
     limit: Joi.number().default(10),
     offset: Joi.number().default(0),
     orderBy: Joi.string().default('id'),
     order: Joi.string()
-      .regex(/^(ASC|DESC)$/)
-      .default('ASC')
-  });
-
-const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
-  limit: Joi.number().default(10),
-  offset: Joi.number().default(0),
-  orderBy: Joi.string().default('id'),
-  order: Joi.string()
-    .regex(/^(ASC|DESC)$/)
-    .default('ASC')
+        .regex(/^(ASC|DESC)$/)
+        .default('ASC')
 });
 
 const ADD_PAGE_SCHEMA = Joi.object().keys({
-  topic: Joi.string().required(),
-  text: Joi.string().required()
+    topic: Joi.string().required(),
+    text: Joi.string().required()
 });
 
 const GET_ALL_SERVICES_SCHEMA = Joi.object().keys({
-  limit: Joi.number().default(10),
-  offset: Joi.number().default(0),
-  orderBy: Joi.string().default('id'),
-  order: Joi.string()
-    .regex(/^(ASC|DESC)$/)
-    .default('ASC')
+    limit: Joi.number().default(10),
+    offset: Joi.number().default(0),
+    orderBy: Joi.string().default('id'),
+    order: Joi.string()
+        .regex(/^(ASC|DESC)$/)
+        .default('ASC')
 });
 
 const GET_SERVICE_SCHEMA = Joi.object().keys({
     id: Joi.number().integer().min(1)
-    });
+});
 
 const GET_ALL_ROOMS_SCHEMA = Joi
     .object()
     .keys({
-        limit : Joi.number().integer().min(1).default(10),
+        limit: Joi.number().integer().min(1).default(10),
         offset: Joi.number().integer().min(0).default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string().regex(/^(ASC|DESC)$/).default('ASC')
@@ -126,7 +126,7 @@ const FIND_USERS_SCHEMA = Joi
         limit: Joi.number().default(10),
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
-        order : Joi.string().default('ASC').valid('ASC, DESC'),
+        order: Joi.string().default('ASC').valid('ASC, DESC'),
     });
 
 const EDIT_ROOM_SCHEMA = Joi
@@ -150,22 +150,22 @@ const GET_PAGE_SCHEMA = Joi.object()
 const GET_ALL_USERS_SCHEMA = Joi
     .object()
     .keys({
-        limit : Joi.number().integer().min(1).default(10),
+        limit: Joi.number().integer().min(1).default(10),
         offset: Joi.number().integer().min(0).default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
     });
 
 const GET_HOUSING_SCHEMA = Joi
-  .object()
-  .keys({
-    id: Joi.number().integer().required().min(1)
-  });
+    .object()
+    .keys({
+        id: Joi.number().integer().required().min(1)
+    });
 
 const EDIT_USER_SCHEMA = Joi
     .object()
     .keys({
-        id: Joi.number().integer().required(), 
+        id: Joi.number().integer().required(),
         phone_number: Joi.string().regex(/^\d+$/).min(11),
         email: Joi.string().email(),
         first_name: Joi.string(),
@@ -200,7 +200,7 @@ const EDIT_SERVICE_SCHEMA = Joi
         price: Joi.string(),
         info: Joi.string()
     })
-    .or('name','description','price','info');
+    .or('name', 'description', 'price', 'info');
 
 const ADD_ROOM_SCHEMA = Joi
     .object()
@@ -235,10 +235,10 @@ const ADD_HOUSING_SCHEMA = Joi
     });
 
 const GET_ONE_ROOM_SCHEMA = Joi
-  .object()
-  .keys({
-    id: Joi.number().integer().min(1).required()
-  });
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    });
 
 module.exports = {
     validate,

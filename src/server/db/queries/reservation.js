@@ -8,7 +8,7 @@ function editReservation(data) {
         .then(res => res[0]);
 }
 
-function addReservation(data){
+function addReservation(data) {
     return knex('reservation')
         .insert(data)
         .returning('*');

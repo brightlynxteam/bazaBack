@@ -8,12 +8,12 @@ const app = new Koa();
 app.use(logger());
 
 app.use(
-  cors({
-    credentials: true
-  })
+    cors({
+        credentials: true
+    })
 );
 
-app.use(formidable({ multiples: true }));
+app.use(formidable({multiples: true}));
 app.use(bodyParser());
 
 const usersRoutes = require('./routes/users');
@@ -35,9 +35,9 @@ app.use(reservationRoutes.routes());
 let port = 13579;
 
 const server = app.listen(port, () => {
-  console.log(`Server backend listening on port: ${port}`);
+    console.log(`Server backend listening on port: ${port}`);
 });
 
 module.exports = {
-  server
+    server
 };

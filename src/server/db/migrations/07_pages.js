@@ -1,5 +1,5 @@
-const { onUpdateTrigger } = require('../../../../knexfile');
-exports.up = function(knex, Promise) {
+const {onUpdateTrigger} = require('../../../../knexfile');
+exports.up = function (knex, Promise) {
 
     return knex.schema
         .createTable('pages', function (table) {
@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
         .then(() => knex.raw(onUpdateTrigger('pages')));
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
     return knex.schema
         .dropTable("pages");
 };
