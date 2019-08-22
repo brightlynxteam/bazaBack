@@ -202,6 +202,16 @@ const EDIT_SERVICE_SCHEMA = Joi
     })
     .or('name','description','price','info');
 
+const ADD_ROOM_SCHEMA = Joi
+    .object()
+    .keys({
+        number: Joi.number().integer().min(1).required(),
+        description: Joi.string().required(),
+        active: Joi.boolean().required(),
+        housing: Joi.number().integer().min(1).required(),
+        capacity: Joi.number().integer().min(1).required(),
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -223,5 +233,6 @@ module.exports = {
     EDIT_USER_SCHEMA,
     EDIT_PAGE_SCHEMA,
     ADD_SERVICE_SCHEMA,
-    EDIT_SERVICE_SCHEMA
+    EDIT_SERVICE_SCHEMA,
+    ADD_ROOM_SCHEMA,
 };

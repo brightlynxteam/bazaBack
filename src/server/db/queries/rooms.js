@@ -16,7 +16,15 @@ async function editRoom(data) {
         .then(res => res[0]);
 }
 
+async function addRoom(data) {
+    return knex('rooms')
+        .returning(['id','number','description','active','housing', 'capacity'])
+        .insert(data)
+        .then(res => res[0]);
+}
+
 module.exports = {
     getAllRooms,
     editRoom,
+    addRoom,
 };
