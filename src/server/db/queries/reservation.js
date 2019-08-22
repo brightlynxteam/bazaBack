@@ -9,5 +9,13 @@ function editReservation(data) {
 }
 
 module.exports = {
+function addReservation(data){
+    return knex('reservation')
+        .insert(data)
+        .returning('*');
+}
+
+module.exports = {
+    addReservation,
     editReservation,
 };
