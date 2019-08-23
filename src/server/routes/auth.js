@@ -8,6 +8,8 @@ const router = new Router();
 const PREFIX_URL = '/auth';
 const REGISTER_USER_URL = `${PREFIX_URL}/register`;
 const LOGIN_URL = `${PREFIX_URL}/login`;
+const CHECK_URL = `${PREFIX_URL}/check`;
+
 
 router.post(
     REGISTER_USER_URL,
@@ -90,5 +92,18 @@ router.post(LOGIN_URL,
         }
     });
 
+router.post(CHECK_URL,
+    authHelper.checkAuth,
+    async (ctx) => {
+
+        ctx.status = 200;
+        ctx.body = {
+            status: 'ok',
+            data: ctx.state.user
+        };
+
+    });
 
 module.exports = router;
+
+

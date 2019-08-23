@@ -42,8 +42,8 @@ async function checkAuth(ctx,next) {
         } else if (accessToken && !refreshToken){
             ctx.state.user = null;
         } else if (accessToken && refreshToken){
-            const expireAccessToken = false;
-            const expireRefreshToken = false;
+            let expireAccessToken = false;
+            let expireRefreshToken = false;
             let payloadAccessToken = null;
             let payloadRefreshToken = null;
             try {
