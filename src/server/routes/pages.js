@@ -5,10 +5,12 @@ const validator = require('../helpers/validator');
 const router = new Router();
 
 const PREFIX_URL = `/pages`;
-const GET_PAGE_URL = `${PREFIX_URL}/getPage`;
-const GET_ALL_PAGES_URL = `${PREFIX_URL}/getAllPages`;
+const GET_ONE_PAGE_URL = `${PREFIX_URL}/getOnePage`;
+const GET_ALL_SERVICES_URL = `${PREFIX_URL}/getAllServices`;
+const GET_ALL_INFOS_URL = `${PREFIX_URL}/getAllInfos`;
 const ADD_PAGE_URL = `${PREFIX_URL}/addPage`;
 const EDIT_PAGE_URL = `${PREFIX_URL}/editPage`;
+const DELETE_PAGE_URL = `${PREFIX_URL}/deletePage`;
 
 router.post(
     ADD_PAGE_URL,
@@ -34,15 +36,13 @@ router.post(
     }
 );
 
-router.post(GET_PAGE_URL,
-    validator.validate(validator.GET_PAGE_SCHEMA),
+router.post(GET_ONE_PAGE_URL,
+    validator.validate(validator.GET_ONE_PAGE_SCHEMA),
     async (ctx) => {
         try {
 
-            let dataObj = ctx.request.body;
-            let id = dataObj.id;
-
-            const resultData = await pagesQueries.getPage(id);
+            let data = ctx.request.body;
+            const resultData = await pagesQueries.getOnePage(data);
 
             if (!resultData) {
                 ctx.status = 200;
@@ -70,17 +70,41 @@ router.post(GET_PAGE_URL,
 );
 
 router.post(
-    GET_ALL_PAGES_URL,
-    validator.validate(validator.GET_ALL_PAGES_SCHEMA),
+    GET_ALL_SERVICES_URL,
+    validator.validate(validator.GET_ALL_SERVICES_SCHEMA),
     async ctx => {
         try {
             let data = ctx.request.body;
-            let pages = await pagesQueries.getAllPages(data);
+            let services = await pagesQueries.getAllServices(data);
             ctx.status = 200;
             ctx.body = {
                 status: 'OK',
-                message: 'Страницы получены',
-                pages
+                message: 'Список услуг получен',
+                data: services
+            };
+        } catch (error) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(error);
+        }
+    }
+);
+
+router.post(
+    GET_ALL_INFOS_URL,
+    validator.validate(validator.GET_ALL_INFOS_SCHEMA),
+    async ctx => {
+        try {
+            let data = ctx.request.body;
+            let infos = await pagesQueries.getAllInfos(data);
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Список информации получен',
+                data: infos
             };
         } catch (error) {
             ctx.status = 500;
@@ -124,5 +148,37 @@ router.post(EDIT_PAGE_URL,
             console.log(err);
         }
     });
+
+router.post(DELETE_PAGE_URL,
+    validator.validate(validator.DELETE_PAGE_SCHEMA),
+    async (ctx) => {
+        try {
+
+            let data = ctx.request.body;
+            const resultData = await pagesQueries.deletePage(data);
+
+            if (!resultData) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Страница удалена!'
+                };
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'Error',
+                    message: 'Страница не найдена'
+                };
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err)
+        }
+    }
+);
 
 module.exports = router;

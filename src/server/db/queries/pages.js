@@ -3,38 +3,59 @@ const knex = require('../connection');
 function addPage(data) {
     return knex('pages')
         .insert(data)
-        .returning(['id', 'topic', 'text', 'created_at', 'updated_at']);
+        .returning('*');
 }
 
-function getAllPages(data) {
+function getAllServices(data) {
     return knex('pages')
+        .where({
+            type: 'SERVICE'
+        })
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
-        .select('id', 'topic', 'text', 'created_at', 'updated_at');
+        .select('id', 'text_id', 'title', 'description', 'main_image');
 }
 
-function getPage(id) {
+function getAllInfos(data) {
+    return knex('pages')
+        .where({
+            type: 'INFO'
+        })
+        .orderBy(data.orderBy, data.order)
+        .offset(data.offset)
+        .limit(data.limit)
+        .select('id', 'text_id', 'title', 'description', 'main_image');
+}
+
+function getOnePage(data) {
     return knex('pages')
         .select('*')
-        .where({id: id})
+        .where(data)
         .first();
 }
 
 function editPage(data) {
     return knex('pages')
-        .where({'id': data.id})
-        .update({
-            topic: data.topic,
-            text: data.text
+        .where({
+            text_id: data.text_id
         })
-        .returning(['id', 'topic', 'text', 'created_at', 'updated_at'])
+        .update(data)
+        .returning('*')
         .then(res => res[0]);
 }
 
+function deletePage(data) {
+    return knex('pages')
+        .where(data)
+        .del();
+}
+
 module.exports = {
-    getAllPages,
+    getAllServices,
     addPage,
-    getPage,
+    getOnePage,
     editPage,
+    getAllInfos,
+    deletePage
 };

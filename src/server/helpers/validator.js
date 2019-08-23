@@ -50,7 +50,17 @@ const LOGIN_SCHEMA = Joi
     })
     .or('email', 'phone_number');
 
-const GET_ALL_PAGES_SCHEMA = Joi.object()
+const GET_ALL_SERVICES_SCHEMA = Joi.object()
+    .keys({
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string()
+            .regex(/^(ASC|DESC)$/)
+            .default('ASC')
+    });
+
+const GET_ALL_INFOS_SCHEMA = Joi.object()
     .keys({
         limit: Joi.number().default(10),
         offset: Joi.number().default(0),
@@ -70,21 +80,14 @@ const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
 });
 
 const ADD_PAGE_SCHEMA = Joi.object().keys({
-    topic: Joi.string().required(),
-    text: Joi.string().required()
-});
-
-const GET_ALL_SERVICES_SCHEMA = Joi.object().keys({
-    limit: Joi.number().default(10),
-    offset: Joi.number().default(0),
-    orderBy: Joi.string().default('id'),
-    order: Joi.string()
-        .regex(/^(ASC|DESC)$/)
-        .default('ASC')
-});
-
-const GET_SERVICE_SCHEMA = Joi.object().keys({
-    id: Joi.number().integer().min(1)
+    text_id: Joi.string().required(),
+    type: Joi.string().valid('SERVICE', 'INFO').required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    content: Joi.string().required(),
+    main_image: Joi.string(),
+    content_images: Joi.array().items(Joi.string()),
+    active: Joi.boolean()
 });
 
 const GET_ALL_ROOMS_SCHEMA = Joi
@@ -141,11 +144,15 @@ const EDIT_ROOM_SCHEMA = Joi
     })
     .min(2);
 
-const GET_PAGE_SCHEMA = Joi.object()
+const GET_ONE_PAGE_SCHEMA = Joi.object()
     .keys({
-        id: Joi.number().integer().min(1).required()
-    })
-    .min(1);
+        text_id: Joi.string().required()
+    });
+
+const DELETE_PAGE_SCHEMA = Joi.object()
+    .keys({
+        text_id: Joi.string().required()
+    });
 
 const GET_ALL_USERS_SCHEMA = Joi
     .object()
@@ -176,31 +183,16 @@ const EDIT_USER_SCHEMA = Joi
 const EDIT_PAGE_SCHEMA = Joi
     .object()
     .keys({
-        id: Joi.number().integer().min(1).required(),
-        topic: Joi.string(),
-        text: Joi.string()
-    })
-    .or('topic', 'text');
-
-const ADD_SERVICE_SCHEMA = Joi
-    .object()
-    .keys({
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-        price: Joi.string().required(),
-        info: Joi.string().required()
-    });
-
-const EDIT_SERVICE_SCHEMA = Joi
-    .object()
-    .keys({
-        id: Joi.number().integer().min(1).required(),
-        name: Joi.string(),
+        text_id: Joi.string().required(),
+        type: Joi.string().valid('SERVICE', 'INFO'),
+        title: Joi.string(),
         description: Joi.string(),
-        price: Joi.string(),
-        info: Joi.string()
+        content: Joi.string(),
+        main_image: Joi.string(),
+        content_images: Joi.array().items(Joi.string()),
+        active: Joi.boolean()
     })
-    .or('name', 'description', 'price', 'info');
+    .min(2);
 
 const ADD_ROOM_SCHEMA = Joi
     .object()
@@ -245,25 +237,23 @@ module.exports = {
     GET_ONE_USER_SCHEMA,
     LOGIN_SCHEMA,
     REGISTER_USER_SCHEMA,
-    GET_ALL_PAGES_SCHEMA,
     GET_ALL_HOUSINGS_SCHEMA,
     GET_ALL_SERVICES_SCHEMA,
-    GET_SERVICE_SCHEMA,
     GET_ALL_ROOMS_SCHEMA,
     EDIT_HOUSING_SCHEMA,
     ADD_RESERVATION_SCHEMA,
     FIND_USERS_SCHEMA,
     EDIT_ROOM_SCHEMA,
     ADD_PAGE_SCHEMA,
-    GET_PAGE_SCHEMA,
+    GET_ONE_PAGE_SCHEMA,
     GET_ALL_USERS_SCHEMA,
     GET_HOUSING_SCHEMA,
     EDIT_USER_SCHEMA,
     EDIT_PAGE_SCHEMA,
-    ADD_SERVICE_SCHEMA,
-    EDIT_SERVICE_SCHEMA,
     ADD_ROOM_SCHEMA,
     EDIT_RESERVATION_SCHEMA,
     ADD_HOUSING_SCHEMA,
     GET_ONE_ROOM_SCHEMA,
+    GET_ALL_INFOS_SCHEMA,
+    DELETE_PAGE_SCHEMA
 };

@@ -20,7 +20,6 @@ const usersRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
 const pagesRoutes = require('./routes/pages');
 const housingsRoutes = require('./routes/housings');
-const servicesRoutes = require('./routes/services');
 const roomsRoutes = require('./routes/rooms');
 const reservationRoutes = require('./routes/reservation');
 
@@ -28,7 +27,6 @@ app.use(usersRoutes.routes());
 app.use(authRoutes.routes());
 app.use(pagesRoutes.routes());
 app.use(housingsRoutes.routes());
-app.use(servicesRoutes.routes());
 app.use(roomsRoutes.routes());
 app.use(reservationRoutes.routes());
 
