@@ -71,7 +71,7 @@ function editUser(id, data) {
         .update(data)
 }
 
-function updateToken(id,token){
+function updateToken(id, token){
   return knex('users')
       .where('id',id)
       .update('refresh_token',token);

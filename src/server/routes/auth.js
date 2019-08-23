@@ -9,6 +9,7 @@ const PREFIX_URL = '/auth';
 const REGISTER_USER_URL = `${PREFIX_URL}/register`;
 const LOGIN_URL = `${PREFIX_URL}/login`;
 const CHECK_URL = `${PREFIX_URL}/check`;
+const LOGOUT_URL = `${PREFIX_URL}/logout`;
 
 
 router.post(
@@ -74,6 +75,40 @@ router.post(LOGIN_URL,
                     status: 'success',
                     message: 'Пользователь залогинен!',
                     data: res
+                }
+            } else {
+                ctx.status = 401;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Неверный пароль!'
+                }
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err);
+        }
+    });
+
+router.post(LOGOUT_URL,
+    authHelper.checkAuth,
+    async (ctx) => {
+
+        try {
+            let user = ctx.state.user;
+
+            let res = await usersQueries.updateToken(user.id, '');
+            if (res) {
+                ctx.cookies.set('access_token', '');
+                ctx.cookies.set('refresh_token', '');
+
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
+                    message: 'Пользователь разлогинен!'
                 }
             } else {
                 ctx.status = 401;
