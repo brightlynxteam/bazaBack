@@ -31,10 +31,10 @@ function register(data) {
     });
 }
 
-function updateUser(opts,data){
+function updateUser(id,token){
   return knex('users')
-      .where('id',opts)
-      .update('refresh_token',data);
+      .where('id',id)
+      .update('refresh_token',token);
 }
 
 module.exports = {

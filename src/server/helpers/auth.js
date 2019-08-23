@@ -4,7 +4,7 @@ const usersQueries = require('../db/queries/users');
 async function updateTokens(id){
     const accessToken = await jwt.sign({ id }, process.env.SECRET_KEY ,{ expiresIn: '1h' });
     const refreshToken = await jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-    await usersQueries.updateUser({id},{refresh_token: refreshToken});
+    await usersQueries.updateUser(id,refreshToken);
     return {
         access_token: accessToken,
         refresh_token: refreshToken
