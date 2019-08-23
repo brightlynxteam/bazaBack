@@ -1,4 +1,5 @@
 function isAdmin(ctx, next) {
+
     if (ctx.state.user && ctx.state.user.isAdmin)
         return next();
 

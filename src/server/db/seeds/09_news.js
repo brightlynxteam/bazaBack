@@ -1,7 +1,7 @@
 exports.seed = function (knex, Promise) {
-    return knex('pages').del()
+    return knex('news').del()
         .then(function () {
-            return knex('pages').insert([
+            return knex('news').insert([
                 {
                     title: 'День поселка на базе отдыха Хуторок!',
                     description: 'Акция в день поселка Мостовской на нашей базе отдыха',

@@ -10,6 +10,7 @@ function getOneUser(data) {
             'phone_number',
             'first_name',
             'second_name',
+            'isAdmin',
             'created_at',
             'updated_at'
         );
@@ -29,7 +30,7 @@ function register(data) {
     return knex('users')
         .insert(data)
         .returning('*')
-        .then(res => [null, res])
+        .then(res => [null, res[0]])
         .catch(err => {
             let message = '';
             if (err.constraint === 'users_phone_number_unique') {

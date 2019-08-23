@@ -2,7 +2,7 @@ const {onUpdateTrigger} = require('../../../../knexfile');
 exports.up = function (knex, Promise) {
 
     return knex.schema
-        .createTable('pages', function (table) {
+        .createTable('news', function (table) {
             table.increments('id').primary();
             table.string('title', 255).notNullable();
             table.text('description');
@@ -14,10 +14,10 @@ exports.up = function (knex, Promise) {
             table.integer('created_at').defaultTo(knex.raw('extract(epoch from now())'));
             table.integer('updated_at').defaultTo(knex.raw('extract(epoch from now())'));
         })
-        .then(() => knex.raw(onUpdateTrigger('pages')));
+        .then(() => knex.raw(onUpdateTrigger('news')));
 };
 
 exports.down = function (knex, Promise) {
     return knex.schema
-        .dropTable("pages");
+        .dropTable("news");
 };

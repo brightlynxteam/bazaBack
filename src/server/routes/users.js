@@ -1,20 +1,22 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const usersQueries = require('../db/queries/users');
+const authHelper = require('../helpers/auth');
 
 const router = new Router();
 
 const PREFIX_URL = '/user';
 const GET_ONE_USER_URL = `${PREFIX_URL}/getOneUser`;
 const GET_ALL_USERS_URL = `${PREFIX_URL}/getAllUsers`;
-const FIND_USERS_URL = `${PREFIX_URL}/findUsers`
+const FIND_USERS_URL = `${PREFIX_URL}/findUsers`;
 const EDIT_USER_URL = `${PREFIX_URL}/editProfile`;
 
 router.post(GET_ONE_USER_URL,
     validator.validate(validator.GET_ONE_USER_SCHEMA),
+    authHelper.checkAuth,
     async (ctx) => {
         try {
-            const data = ctx.request.body;
+            let data = ctx.request.body;
             if (!Object.keys(data).length) {
                 data = {id: ctx.state.user.id};
             }

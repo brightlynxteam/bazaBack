@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const pagesQueries = require('../db/queries/pages');
 const validator = require('../helpers/validator');
+const authHelper = require('../helpers/auth');
+const rolesHelper = require('../helpers/roles');
 
 const router = new Router();
 
@@ -119,6 +121,8 @@ router.post(
 
 router.post(EDIT_PAGE_URL,
     validator.validate(validator.EDIT_PAGE_SCHEMA),
+    authHelper.checkAuth,
+    rolesHelper.isAdmin,
     async (ctx) => {
 
         try {

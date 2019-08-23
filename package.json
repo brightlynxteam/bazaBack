@@ -22,7 +22,7 @@
     "eslint-plugin-import": "^2.18.2"
   },
   "scripts": {
-    "start": "nodemon src/server/index.js",
+    "start": "SECRET_KEY='super_secret_key' nodemon src/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

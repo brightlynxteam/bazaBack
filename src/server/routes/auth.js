@@ -18,15 +18,21 @@ router.post(
     async ctx => {
         try {
             let data = ctx.request.body;
-            data.password = await authHelper.getHash(data.password)
+            data.password = await authHelper.getHash(data.password);
 
             let [err, user] = await usersQueries.register(data);
             if (user) {
+
+                let tokens = await authHelper.updateTokens(user.id);
+
+                ctx.cookies.set('access_token', tokens.access_token);
+                ctx.cookies.set('refresh_token', tokens.refresh_token);
+
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
                     message: 'Пользователь зарегистрирован!',
-                    user
+                    data: user
                 };
             } else if (err) {
                 ctx.status = 409;
@@ -34,6 +40,7 @@ router.post(
                     status: 'Error',
                     message: err
                 };
+                console.log(err);
             }
         } catch (err) {
             ctx.status = 500;
@@ -41,6 +48,7 @@ router.post(
                 status: 'Error',
                 message: 'Внутренняя ошибка сервера.'
             };
+            console.log(err);
         }
     }
 );
@@ -70,6 +78,12 @@ router.post(LOGIN_URL,
 
             let res = await usersQueries.getOneUser(user);
             if (rightPassword && res) {
+
+                let tokens = await authHelper.updateTokens(res.id);
+
+                ctx.cookies.set('access_token', tokens.access_token);
+                ctx.cookies.set('refresh_token', tokens.refresh_token);
+
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
