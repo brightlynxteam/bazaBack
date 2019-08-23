@@ -71,11 +71,18 @@ function editUser(id, data) {
         .update(data)
 }
 
+function updateToken(id,token){
+  return knex('users')
+      .where('id',id)
+      .update('refresh_token',token);
+}
+
 module.exports = {
     getOneUser,
     register,
     findUsers,
     getAllUsers,
     login,
-    editUser
+    editUser,
+    updateToken,
 };
