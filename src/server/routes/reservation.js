@@ -5,6 +5,7 @@ const router = new Router();
 
 const PREFIX_URL = '/reservation';
 const ADD_RESERVATION_URL = `${PREFIX_URL}/addReservation`;
+const EDIT_RESERVATION_URL = `${PREFIX_URL}/editReservation`;
 
 router.post(ADD_RESERVATION_URL,
     validator.validate(validator.ADD_RESERVATION_SCHEMA),
@@ -16,7 +17,7 @@ router.post(ADD_RESERVATION_URL,
             let data = ctx.request.body;
             let reservation = await reservationQueries.addReservation(data);
 
-            if (reservation){
+            if (reservation) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
@@ -36,7 +37,42 @@ router.post(ADD_RESERVATION_URL,
                 status: 'error',
                 message: 'Внутренняя ошибка сервера.'
             };
-            console.log(err)
+            console.log(err);
+        }
+    }
+);
+
+router.post(EDIT_RESERVATION_URL,
+    validator.validate(validator.EDIT_RESERVATION_SCHEMA),
+    async (ctx) => {
+
+        //TODO добавить проверку на администратора
+
+        try {
+            let data = ctx.request.body;
+            let reservation = await reservationQueries.editReservation(data);
+
+            if (reservation) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Бронирование изменено!',
+                    reservation: reservation
+                };
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Бронирование не найдено'
+                }
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err);
         }
     }
 );

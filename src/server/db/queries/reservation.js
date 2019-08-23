@@ -1,6 +1,14 @@
 const knex = require('../connection');
 
-function addReservation(data){
+function editReservation(data) {
+    return knex('reservation')
+        .returning(['id', 'room', 'user', 'start_date', 'end_date', 'bail', 'paid', 'active'])
+        .where({'id': data.id})
+        .update(data)
+        .then(res => res[0]);
+}
+
+function addReservation(data) {
     return knex('reservation')
         .insert(data)
         .returning('*');
@@ -8,4 +16,5 @@ function addReservation(data){
 
 module.exports = {
     addReservation,
+    editReservation,
 };

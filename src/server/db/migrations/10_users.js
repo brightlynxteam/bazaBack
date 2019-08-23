@@ -1,5 +1,5 @@
-const { onUpdateTrigger } = require('../../../../knexfile');
-exports.up = function(knex, Promise) {
+const {onUpdateTrigger} = require('../../../../knexfile');
+exports.up = function (knex, Promise) {
 
 
     return knex.schema
@@ -11,13 +11,14 @@ exports.up = function(knex, Promise) {
             table.string('first_name', 255).notNullable();
             table.string('second_name', 255).notNullable();
             table.string('refresh_token', 255).defaultTo('').notNullable();
+            table.boolean('isAdmin').defaultTo(false);
             table.integer('created_at').defaultTo(knex.raw('extract(epoch from now())'));
             table.integer('updated_at').defaultTo(knex.raw('extract(epoch from now())'));
         })
         .then(() => knex.raw(onUpdateTrigger('users')));
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
     return knex.schema
         .dropTable("users");
 };

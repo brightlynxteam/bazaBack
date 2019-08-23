@@ -1,10 +1,21 @@
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const usersQueries = require('../db/queries/users');
+
+async function getHash(plaintextPassword) {
+
+    return await bcrypt.hash(plaintextPassword, 10);
+}
+
+async function comparePassword(plaintextPassword, passwordHash) {
+
+    return await bcrypt.compare(plaintextPassword, passwordHash);
+}
 
 async function updateTokens(id){
     const accessToken = await jwt.sign({ id }, process.env.SECRET_KEY ,{ expiresIn: '1h' });
     const refreshToken = await jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: '24h' });
-    await usersQueries.updateUser(id,refreshToken);
+    await usersQueries.updateToken(id,refreshToken);
     return {
         access_token: accessToken,
         refresh_token: refreshToken
@@ -67,6 +78,8 @@ async function checkAuth(ctx,next) {
 
 
 module.exports = {
+    getHash,
+    comparePassword,
     updateTokens,
     checkAuth
-}
+};
