@@ -232,6 +232,46 @@ const GET_ONE_ROOM_SCHEMA = Joi
         id: Joi.number().integer().min(1).required()
     });
 
+const GET_ALL_NEWS_SCHEMA = Joi.object()
+    .keys({
+        limit: Joi.number().default(10),
+        offset: Joi.number().default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string()
+            .regex(/^(ASC|DESC)$/)
+            .default('ASC')
+    });
+
+const ADD_NEWS_SCHEMA = Joi.object().keys({
+    id: Joi.number().integer().min(1).required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    content: Joi.string().required(),
+    main_image: Joi.string(),
+    content_images: Joi.array().items(Joi.string()),
+    repost: Joi.boolean(),
+    period: Joi.number().integer()
+});
+
+const GET_ONE_NEWS_SCHEMA = Joi.object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    });
+
+const EDIT_NEWS_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+        content: Joi.string().required(),
+        main_image: Joi.string(),
+        content_images: Joi.array().items(Joi.string()),
+        repost: Joi.boolean(),
+        period: Joi.number().integer()
+    })
+    .min(2);
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -255,5 +295,9 @@ module.exports = {
     ADD_HOUSING_SCHEMA,
     GET_ONE_ROOM_SCHEMA,
     GET_ALL_INFOS_SCHEMA,
-    DELETE_PAGE_SCHEMA
+    DELETE_PAGE_SCHEMA,
+    GET_ALL_NEWS_SCHEMA,
+    ADD_NEWS_SCHEMA,
+    GET_ONE_NEWS_SCHEMA,
+    EDIT_NEWS_SCHEMA,
 };
