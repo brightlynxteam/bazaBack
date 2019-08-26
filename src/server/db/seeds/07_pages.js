@@ -98,6 +98,30 @@ exports.seed = function (knex, Promise) {
                         'https://static.wixstatic.com/media/874ff7_94cdcd4c47b9433d945f608eef173510~mv2.jpg/v1/fill/w_1232,h_813,al_c,q_90/file.jpg',
                         'https://static.wixstatic.com/media/874ff7_6ad668c16e744b6ab0668dcc00d224e4~mv2_d_1920_1285_s_2.jpg/v1/fill/w_1600,h_1070,al_c,q_90/file.jpg'
                     ]
+                },
+                {
+                    text_id: 'booking',
+                    type: 'INFO',
+                    title: 'Информация о бронировании',
+                    description: 'Вся необходимая информация о бронировании',
+                    content: 'Бронируйте просто и быстро - с нашей уникальной системой бронирования свободных номеров!',
+                    main_image: 'http://gostinica.su/wp-content/uploads/2017/10/booking-online.jpg',
+                    content_images: [
+                        'http://anapka.ru/f/2012/03/12/1203120022yr.jpg',
+                        'http://rukodelnicam.ru/wp-content/uploads/2014/06/vybor-gostinic.jpg'
+                    ],
+                },
+                {
+                    text_id: 'payment',
+                    type: 'INFO',
+                    title: 'Информация об оплате',
+                    description: 'Вся необходимая информация об оплате',
+                    content: 'Мы идем навстречу всем своим гостям, поэтому поддерживаем огромное количество систем оплаты - от бартера на домашнюю птицу до криптовалют!',
+                    main_image: 'http://upts.vorkuta.com/images/credit_card.png',
+                    content_images: [
+                        'http://upts.vorkuta.com/images/credit_card.png',
+                        'https://cs6.livemaster.ru/storage/b1/80/6e1f208548e3dabaf5c7e031e07r.jpg'
+                    ],
                 }
             ]);
         });
