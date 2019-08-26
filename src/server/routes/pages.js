@@ -25,7 +25,7 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Страница добавлена',
-                page
+                data: page
             };
         } catch (error) {
             ctx.status = 500;
@@ -51,7 +51,7 @@ router.post(GET_ONE_PAGE_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Страница получена!',
-                    page: resultData
+                    data: resultData
                 };
             } else {
                 ctx.status = 404;
@@ -140,7 +140,7 @@ router.post(EDIT_PAGE_URL,
                 ctx.status = 400;
                 ctx.body = {
                     status: 'error',
-                    message: 'Некорректные данные'
+                    message: 'Некpageорректные данные'
                 };
             }
         } catch (err) {

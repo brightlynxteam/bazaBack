@@ -22,7 +22,7 @@ router.post(ADD_RESERVATION_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Бронирование добавлено!',
-                    reservation: reservation
+                    data: reservation
                 };
             } else {
                 ctx.status = 404;
@@ -57,7 +57,7 @@ router.post(EDIT_RESERVATION_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Бронирование изменено!',
-                    reservation: reservation
+                    data: reservation
                 };
             } else {
                 ctx.status = 404;

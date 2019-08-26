@@ -21,7 +21,7 @@ router.post(GET_ALL_ROOMS_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о комнатах получены!',
-                    rooms: res
+                    data: res
                 };
             } else {
                 ctx.status = 404;
@@ -52,7 +52,7 @@ router.post(EDIT_ROOM_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о комнате изменены!',
-                    room: res,
+                    data: res,
                 };
             } else {
                 ctx.status = 404;
@@ -83,7 +83,7 @@ router.post(ADD_ROOM_URL,
             ctx.body = {
                 status: 'OK',
                 message: 'Комната добавлена!',
-                room: res
+                data: res
             };
         } catch (err) {
             ctx.status = 500;

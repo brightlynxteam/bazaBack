@@ -57,7 +57,7 @@ router.post(GET_ALL_USERS_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователи получены!',
-                    users: res
+                    data: res
                 };
             } else {
                 ctx.status = 404;
@@ -89,7 +89,7 @@ router.post(FIND_USERS_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователи получены!',
-                    users: res
+                    data: res
                 };
             } else {
                 ctx.status = 404;
@@ -122,7 +122,7 @@ router.post(EDIT_USER_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Профиль пользователя успешно изменен!',
-                    user: res
+                    data: res
                 };
             } else {
                 ctx.status = 404;

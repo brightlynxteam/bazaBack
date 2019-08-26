@@ -21,7 +21,7 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Данные о корпусах получены!',
-                housings
+                data: housings
             };
         } catch (err) {
             ctx.status = 500;
@@ -45,7 +45,7 @@ router.post(EDIT_HOUSING_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Корпус успешно изменен!',
-                    housing: res[0]
+                    data: res[0]
                 };
             } else {
                 ctx.status = 404;
@@ -75,7 +75,7 @@ router.post(GET_HOUSING_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о корпусе получены!',
-                    housing: res,
+                    data: res,
                 };
             } else {
                 ctx.status = 404;
@@ -107,7 +107,7 @@ router.post(ADD_HOUSING_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Корпус добавлен!',
-                    photos: res
+                    data: res
                 }
             } else {
                 ctx.status = 404;
