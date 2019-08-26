@@ -46,7 +46,7 @@ router.post(GET_ONE_PAGE_URL,
             let data = ctx.request.body;
             const resultData = await pagesQueries.getOnePage(data);
 
-            if (!resultData) {
+            if (resultData) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
@@ -161,7 +161,7 @@ router.post(DELETE_PAGE_URL,
             let data = ctx.request.body;
             const resultData = await pagesQueries.deletePage(data);
 
-            if (!resultData) {
+            if (resultData) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',

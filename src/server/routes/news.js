@@ -44,7 +44,7 @@ router.post(GET_ONE_NEWS_URL,
             let data = ctx.request.body;
             const resultData = await newsQueries.getOneNews(data.id);
 
-            if (!resultData) {
+            if (resultData) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
