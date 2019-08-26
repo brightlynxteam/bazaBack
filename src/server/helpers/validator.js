@@ -44,11 +44,10 @@ const REGISTER_USER_SCHEMA = Joi.object()
 const LOGIN_SCHEMA = Joi
     .object()
     .keys({
-        phone_number: Joi.string().regex(/^\d+$/).length(11),
-        email: Joi.string().email(),
-        password: Joi.string().required()
+        login: [Joi.string().regex(/^\d+$/).length(11), Joi.string().email()],
+        password: Joi.string()
     })
-    .or('email', 'phone_number');
+    .required('login', 'password');
 
 const GET_ALL_SERVICES_SCHEMA = Joi.object()
     .keys({

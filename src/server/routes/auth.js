@@ -59,7 +59,7 @@ router.post(LOGIN_URL,
 
         try {
             let data = ctx.request.body;
-            let userData = (data.email) ? {email: data.email} : {phone_number: data.phone_number};
+            let userData = (data.login.includes('@')) ? {email: data.login} : {phone_number: data.login};
 
 
             let user = await usersQueries.login(userData);
