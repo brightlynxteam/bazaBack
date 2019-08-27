@@ -271,6 +271,36 @@ const EDIT_NEWS_SCHEMA = Joi
     })
     .min(2);
 
+const ADD_FEEDBACK_SCHEMA = Joi
+    .object()
+    .keys({
+        name: Joi.string().required(),
+        email: Joi.string().email().required(),
+        phone: Joi.string().regex(/^\d+$/).min(10).required(),
+        message: Joi.string().required()
+    });
+
+const GET_ALL_FEEDBACK_SCHEMA = Joi
+    .object()
+    .keys({
+        limit: Joi.number().integer().min(1).default(10),
+        offset: Joi.number().integer().min(0).default(0),
+        orderBy: Joi.string().default('id'),
+        order: Joi.string().lowercase().valid('asc', 'desc').default('asc')
+    });
+
+const GET_ONE_FEEDBACK_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    });
+
+const DELETE_FEEDBACK_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    })
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -299,4 +329,8 @@ module.exports = {
     ADD_NEWS_SCHEMA,
     GET_ONE_NEWS_SCHEMA,
     EDIT_NEWS_SCHEMA,
+    ADD_FEEDBACK_SCHEMA,
+    GET_ALL_FEEDBACK_SCHEMA,
+    GET_ONE_FEEDBACK_SCHEMA,
+    DELETE_FEEDBACK_SCHEMA
 };

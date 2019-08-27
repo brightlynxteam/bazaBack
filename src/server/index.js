@@ -23,6 +23,7 @@ const newsRoutes = require('./routes/news');
 const housingsRoutes = require('./routes/housings');
 const roomsRoutes = require('./routes/rooms');
 const reservationRoutes = require('./routes/reservation');
+const feedbackRoutes = require('./routes/feedback');
 
 app.use(usersRoutes.routes());
 app.use(authRoutes.routes());
@@ -31,6 +32,7 @@ app.use(newsRoutes.routes());
 app.use(housingsRoutes.routes());
 app.use(roomsRoutes.routes());
 app.use(reservationRoutes.routes());
+app.use(feedbackRoutes.routes());
 
 let port = 13579;
 
