@@ -28,6 +28,40 @@ function getAllInfos(data) {
         .select('id', 'text_id', 'title', 'description', 'main_image');
 }
 
+async function getAllFAQ() {
+
+    let data = await knex('pages')
+        .select('id', 'text_id', 'title', 'description', 'content')
+        .where({
+            type: 'FAQ'
+        })
+        .orderBy('description', 'asc')
+        .orderBy('title', 'asc');
+
+    let topics = [];
+    let faq = [];
+
+    data.forEach(item => {
+        if (!topics.includes(item.description)) topics.push(item.description);
+    });
+
+    topics.forEach(topic => {
+        let obj = {
+            topic: topic,
+            faq: []
+        };
+        data.forEach(item => {
+            if (item.description === topic) {
+                obj.faq.push(item);
+            }
+        });
+        faq.push(obj);
+    });
+
+    return faq;
+
+}
+
 function getOnePage(data) {
     return knex('pages')
         .select('*')
@@ -57,5 +91,6 @@ module.exports = {
     getOnePage,
     editPage,
     getAllInfos,
-    deletePage
+    deletePage,
+    getAllFAQ
 };

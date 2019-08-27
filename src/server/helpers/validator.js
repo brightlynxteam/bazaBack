@@ -271,6 +271,11 @@ const EDIT_NEWS_SCHEMA = Joi
     })
     .min(2);
 
+const GET_ALL_FAQ_SCHEMA = Joi.object()
+    .keys({
+
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -299,4 +304,5 @@ module.exports = {
     ADD_NEWS_SCHEMA,
     GET_ONE_NEWS_SCHEMA,
     EDIT_NEWS_SCHEMA,
+    GET_ALL_FAQ_SCHEMA,
 };
