@@ -6,8 +6,16 @@ function addPage(data) {
         .returning('*');
 }
 
-function getAllServices(data) {
-    return knex('pages')
+async function getAllServices(data) {
+
+    let total = await knex('pages')
+        .where({
+            type: 'SERVICE'
+        })
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('pages')
         .where({
             type: 'SERVICE'
         })
@@ -15,10 +23,20 @@ function getAllServices(data) {
         .offset(data.offset)
         .limit(data.limit)
         .select('id', 'text_id', 'title', 'description', 'main_image');
+
+    return {result, total};
 }
 
-function getAllInfos(data) {
-    return knex('pages')
+async function getAllInfos(data) {
+
+    let total = await knex('pages')
+        .where({
+            type: 'INFO'
+        })
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('pages')
         .where({
             type: 'INFO'
         })
@@ -26,6 +44,8 @@ function getAllInfos(data) {
         .offset(data.offset)
         .limit(data.limit)
         .select('id', 'text_id', 'title', 'description', 'main_image');
+
+    return {result, total};
 }
 
 async function getAllFAQ() {

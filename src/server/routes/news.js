@@ -80,7 +80,8 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Список новостей получен',
-                data: news
+                data: news.result,
+                total: news.total
             };
         } catch (error) {
             ctx.status = 500;

@@ -83,7 +83,8 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Список услуг получен',
-                data: services
+                data: services.result,
+                total: services.total
             };
         } catch (error) {
             ctx.status = 500;
@@ -107,7 +108,8 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Список информации получен',
-                data: infos
+                data: infos.result,
+                total: infos.total
             };
         } catch (error) {
             ctx.status = 500;

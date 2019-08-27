@@ -21,7 +21,8 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Данные о корпусах получены!',
-                data: housings
+                data: housings.result,
+                total: housings.total
             };
         } catch (err) {
             ctx.status = 500;

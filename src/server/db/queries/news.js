@@ -6,12 +6,19 @@ function addNews(data) {
         .returning('*');
 }
 
-function getAllNews(data) {
-    return knex('news')
+async function getAllNews(data) {
+
+    let total = await knex('news')
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('news')
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
         .select('id', 'title', 'description', 'main_image', 'created_at', 'updated_at');
+
+    return {result, total};
 }
 
 function getOneNews(id) {
