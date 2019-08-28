@@ -22,12 +22,18 @@ async function getAllNews(data) {
 }
 
 function getOneNews(id) {
-    return knex('news')
+
+    return knex
+        .from(knex('news')
+            .select(knex.raw('*, lag(id) over (order by id asc) as prev, lead(id) over (order by id asc) as next'))
+            .as('rows')
+        )
         .select('*')
         .where({
             id: id
         })
         .first();
+
 }
 
 function editNews(data) {
