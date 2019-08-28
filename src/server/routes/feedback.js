@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const feedbackQueries = require('../db/queries/feedback');
+const authHelper = require('../helpers/auth');
+const rolesHelper = require('../helpers/roles');
 
 const router = new Router();
 
@@ -43,6 +45,8 @@ router.post(
 
 router.get(
     GET_ALL_MESSAGES_URL,
+    authHelper.checkAuth,
+    rolesHelper.isAdmin,
     validator.validate(validator.GET_ALL_FEEDBACK_SCHEMA),
     async ctx => {
         try {
@@ -74,6 +78,8 @@ router.get(
 
 router.get(
     GET_ONE_NESSAGE_URL,
+    authHelper.checkAuth,
+    rolesHelper.isAdmin,
     validator.validate(validator.GET_ONE_FEEDBACK_SCHEMA),
     async ctx => {
         try {
@@ -97,6 +103,8 @@ router.get(
 
 router.delete(
     DELETE_MESSAGE_URL,
+    authHelper.checkAuth,
+    rolesHelper.isAdmin,
     validator.validate(validator.DELETE_FEEDBACK_SCHEMA),
     async ctx => {
         try {
