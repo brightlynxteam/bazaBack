@@ -16,23 +16,28 @@ const CHECK_RECOVERY_HASH = `${PREFIX_URL}/checkRecoveryHash`;
 const SET_NEW_PASSWORD = `${PREFIX_URL}/setNewPassword`;
 
 
-// router.post(SEND_RECOVERY_HASH,
-//     validator.validate(validator.GET_ONE_USER_SCHEMA),
-//     async (ctx) => {
-//         try {
-//             let data = ctx.request.body;
-//             let hash = await authHelper.makeRecoveryHash(data.email);
+router.post(SEND_RECOVERY_HASH,
+    validator.validate(validator.GET_ONE_USER_SCHEMA),
+    async (ctx) => {
+        try {
+            let data = ctx.request.body;
+            let hash = await authHelper.getRecoveryHash(data.email);
 
-//             await mailerHelper.sendRecoveryHash(data.email, hash)
-//         } catch (err) {
-//             ctx.status = 500;
-//             ctx.body = {
-//                 status: 'error',
-//                 message: 'Внутренняя ошибка сервера.',
-//             };
-//             console.log(err);
-//         }
-//     });
+            // await mailerHelper.sendRecoveryHash(data.email, hash)
+
+            ctx.status = 200;
+            ctx.body = {
+                status: 'ok',
+            };
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.',
+            };
+            console.log(err);
+        }
+    });
 
 router.post(CHECK_RECOVERY_HASH,
     async (ctx) => {
@@ -66,7 +71,6 @@ router.post(CHECK_RECOVERY_HASH,
                 let data = ctx.request.body;
                 let res = await authHelper.checkRecoveryHash(data.email, data.hash);
                 if (res) {
-
                     let hashNewPassword = await authHelper.getHash(data.newPassword);
                     let accessUser = await usersQueries.getOneUser({email: data.email});
 
