@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const usersQueries = require('../db/queries/users');
 const authHelper = require('../helpers/auth');
+// const mailerHelper = require('../helpers/mailer');
 
 const router = new Router();
 
@@ -10,7 +11,88 @@ const REGISTER_USER_URL = `${PREFIX_URL}/register`;
 const LOGIN_URL = `${PREFIX_URL}/login`;
 const CHECK_URL = `${PREFIX_URL}/check`;
 const LOGOUT_URL = `${PREFIX_URL}/logout`;
+const SEND_RECOVERY_HASH = `${PREFIX_URL}/sendRecoveryHash`;
+const CHECK_RECOVERY_HASH = `${PREFIX_URL}/checkRecoveryHash`;
+const SET_NEW_PASSWORD = `${PREFIX_URL}/setNewPassword`;
 
+
+// router.post(SEND_RECOVERY_HASH,
+//     validator.validate(validator.GET_ONE_USER_SCHEMA),
+//     async (ctx) => {
+//         try {
+//             let data = ctx.request.body;
+//             let hash = await authHelper.makeRecoveryHash(data.email);
+
+//             await mailerHelper.sendRecoveryHash(data.email, hash)
+//         } catch (err) {
+//             ctx.status = 500;
+//             ctx.body = {
+//                 status: 'error',
+//                 message: 'Внутренняя ошибка сервера.',
+//             };
+//             console.log(err);
+//         }
+//     });
+
+router.post(CHECK_RECOVERY_HASH,
+    async (ctx) => {
+        try {
+            let data = ctx.request.body;
+            let res = await authHelper.checkRecoveryHash(data.email, data.hash);
+            if (res) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
+                };
+            } else {
+                ctx.status = 400;
+                ctx.body = {
+                    status: 'error',
+                };
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.',
+            };
+            console.log(err);
+        }
+    });
+
+    router.post(SET_NEW_PASSWORD,
+        async (ctx) => {
+            try {
+                let data = ctx.request.body;
+                let res = await authHelper.checkRecoveryHash(data.email, data.hash);
+                if (res) {
+
+                    let hashNewPassword = await authHelper.getHash(data.newPassword);
+                    let accessUser = await usersQueries.getOneUser({email: data.email});
+
+                    await usersQueries.editUser(accessUser.id, {password: hashNewPassword});
+                    
+                    ctx.status = 200;
+                    ctx.body = {
+                        status: 'success',
+                        message: 'Пароль изменен',
+                    };
+                } else {
+                    ctx.status = 400;
+                    ctx.body = {
+                        status: 'error',
+                        message: 'Некорректный Hash', 
+                    };
+                }
+            } catch (err) {
+                ctx.status = 500;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Внутренняя ошибка сервера.',
+                };
+                console.log(err);
+            }
+        });
 
 router.post(
     REGISTER_USER_URL,

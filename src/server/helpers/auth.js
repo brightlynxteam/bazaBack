@@ -1,6 +1,23 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const hash = require('object-hash');
 const usersQueries = require('../db/queries/users');
+
+async function getRecoveryHash(email) {
+    const accessUser = await usersQueries.getOneUser({email: email});
+    return await hash({
+        email: email,
+        updated_at: accessUser.updated_at,
+    });
+}
+
+async function checkRecoveryHash(email, hash) {
+    if (await getRecoveryHash(email) === hash) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 async function getHash(plaintextPassword) {
 
@@ -81,5 +98,7 @@ module.exports = {
     getHash,
     comparePassword,
     updateTokens,
-    checkAuth
+    checkAuth,
+    getRecoveryHash,
+    checkRecoveryHash,
 };
