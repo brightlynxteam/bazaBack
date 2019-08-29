@@ -1,33 +1,27 @@
 const knex = require('../connection');
 
-function sendMessage(name, email, phone, message) {
-    return knex('feedback')
-        .insert({
-            name: name,
-            email, email,
-            phone: phone,
-            message: message
-        });
+function sendMessage(data) {
+    return knex('feedback').insert(data);
 }
 
-function getAllMessages(limit, offset, orderBy, order) {
+function getAllMessages(data) {
     return knex('feedback')
-        .limit(limit)
-        .offset(offset)
-        .orderBy(orderBy, order)
+        .limit(data.limit)
+        .offset(data.offset)
+        .orderBy(data.orderBy, data.order)
         .select('id', 'name', 'email', 'phone', 'message');
 }
 
-function getOneMessage(id) {
+function getOneMessage(data) {
     return knex('feedback')
         .select('id', 'name', 'email', 'phone', 'message')
-        .where('id', id);
+        .where('id', data.id);
 }
 
 function deleteMessage(id) {
     return knex('feedback')
-        .where('id', id)
-        .del()
+        .where('id', data.id)
+        .del();
 }
 
 module.exports = {

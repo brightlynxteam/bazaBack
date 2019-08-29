@@ -17,8 +17,7 @@ router.post(
     validator.validate(validator.ADD_FEEDBACK_SCHEMA),
     async ctx => {
         try {
-            let { name, email, phone, message } = ctx.request.body;
-            let res = await feedbackQueries.sendMessage(name, email, phone, message);
+            let res = await feedbackQueries.sendMessage(ctx.request.body);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
@@ -50,8 +49,7 @@ router.get(
     validator.validate(validator.GET_ALL_FEEDBACK_SCHEMA),
     async ctx => {
         try {
-            let { limit, offset, orderBy, order } = ctx.request.body;
-            let res = await feedbackQueries.getAllMessages(limit, offset, orderBy, order);
+            let res = await feedbackQueries.getAllMessages(ctx.request.body);
             if (res.length > 0) {
                 ctx.status = 200;
                 ctx.body = {
@@ -83,8 +81,7 @@ router.get(
     validator.validate(validator.GET_ONE_FEEDBACK_SCHEMA),
     async ctx => {
         try {
-            let { id } = ctx.request.body;
-            let res = feedbackQueries.getOneMessage(id);
+            let res = feedbackQueries.getOneMessage(ctx.request.body);
             ctx.status = 200;
             ctx.body = {
                 status: 'OK',
@@ -109,7 +106,7 @@ router.delete(
     async ctx => {
         try {
             let { id } = ctx.request.body;
-            let res = feedbackQueries.deleteMessage(id);
+            let res = feedbackQueries.deleteMessage(ctx.request.body);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
