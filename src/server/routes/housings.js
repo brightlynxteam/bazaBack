@@ -40,7 +40,7 @@ router.post(EDIT_HOUSING_URL,
         //TODO добавить уровень доступа
         try {
             let data = ctx.request.body;
-            let res = await roomsQueries.editHousing(data);
+            let res = await housingsQueries.editHousing(data);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {

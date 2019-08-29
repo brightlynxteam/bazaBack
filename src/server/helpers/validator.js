@@ -55,8 +55,8 @@ const GET_ALL_SERVICES_SCHEMA = Joi.object()
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string()
-            .regex(/^(ASC|DESC)$/)
-            .default('ASC')
+            .regex(/^(asc|desc)$/)
+            .default('asc')
     });
 
 const GET_ALL_INFOS_SCHEMA = Joi.object()
@@ -65,8 +65,8 @@ const GET_ALL_INFOS_SCHEMA = Joi.object()
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string()
-            .regex(/^(ASC|DESC)$/)
-            .default('ASC')
+            .regex(/^(asc|desc)$/)
+            .default('asc')
     });
 
 const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
@@ -74,13 +74,13 @@ const GET_ALL_HOUSINGS_SCHEMA = Joi.object().keys({
     offset: Joi.number().default(0),
     orderBy: Joi.string().default('id'),
     order: Joi.string()
-        .regex(/^(ASC|DESC)$/)
-        .default('ASC')
+        .regex(/^(asc|desc)$/)
+        .default('asc')
 });
 
 const ADD_PAGE_SCHEMA = Joi.object().keys({
     text_id: Joi.string().required(),
-    type: Joi.string().valid('SERVICE', 'INFO').required(),
+    type: Joi.string().valid('SERVICE', 'INFO', 'FAQ').required(),
     title: Joi.string().required(),
     description: Joi.string().required(),
     content: Joi.string().required(),
@@ -95,7 +95,7 @@ const GET_ALL_ROOMS_SCHEMA = Joi
         limit: Joi.number().integer().min(1).default(10),
         offset: Joi.number().integer().min(0).default(0),
         orderBy: Joi.string().default('id'),
-        order: Joi.string().regex(/^(ASC|DESC)$/).default('ASC')
+        order: Joi.string().regex(/^(asc|desc)$/).default('asc')
     });
 
 const EDIT_HOUSING_SCHEMA = Joi
@@ -104,7 +104,7 @@ const EDIT_HOUSING_SCHEMA = Joi
         id: Joi.number().integer().min(1).required(),
         number: Joi.number().integer().min(1),
         description: Joi.string(),
-        photos: Joi.array().items(Joi.string().regex(/^.*\.+(jpg)$/)),
+        photos: Joi.array().items(Joi.string()),
     })
     .min(2);
 
@@ -128,7 +128,7 @@ const FIND_USERS_SCHEMA = Joi
         limit: Joi.number().default(10),
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
-        order: Joi.string().default('ASC').valid('ASC, DESC'),
+        order: Joi.string().default('asc').valid('asc', 'desc')
     });
 
 const EDIT_ROOM_SCHEMA = Joi
@@ -176,6 +176,7 @@ const EDIT_USER_SCHEMA = Joi
         email: Joi.string().email(),
         first_name: Joi.string(),
         second_name: Joi.string(),
+        password: Joi.string()
     })
     .min(2);
 
@@ -183,7 +184,7 @@ const EDIT_PAGE_SCHEMA = Joi
     .object()
     .keys({
         text_id: Joi.string().required(),
-        type: Joi.string().valid('SERVICE', 'INFO'),
+        type: Joi.string().valid('SERVICE', 'INFO', 'FAQ'),
         title: Joi.string(),
         description: Joi.string(),
         content: Joi.string(),
@@ -222,7 +223,7 @@ const ADD_HOUSING_SCHEMA = Joi
     .keys({
         number: Joi.number().required(),
         description: Joi.string().required(),
-        photos: Joi.array().required()
+        photos: Joi.array().items(Joi.string()).required()
     });
 
 const GET_ONE_ROOM_SCHEMA = Joi
@@ -237,12 +238,11 @@ const GET_ALL_NEWS_SCHEMA = Joi.object()
         offset: Joi.number().default(0),
         orderBy: Joi.string().default('id'),
         order: Joi.string()
-            .regex(/^(ASC|DESC)$/)
-            .default('ASC')
+            .regex(/^(asc|desc)$/)
+            .default('asc')
     });
 
 const ADD_NEWS_SCHEMA = Joi.object().keys({
-    id: Joi.number().integer().min(1).required(),
     title: Joi.string().required(),
     description: Joi.string().required(),
     content: Joi.string().required(),
@@ -304,7 +304,28 @@ const DELETE_FEEDBACK_SCHEMA = Joi
     .object()
     .keys({
         id: Joi.number().integer().min(1).required()
-    })
+    });
+
+const SEND_RECOVERY_HASH_SCHEMA = Joi
+    .object()
+    .keys({
+        email: Joi.string().email()
+    });
+
+const CHECK_RECOVERY_HASH_SCHEMA = Joi
+    .object()
+    .keys({
+        email: Joi.string().email().required(),
+        hash: Joi.string().required()
+    });
+
+const SET_NEW_PASSWORD_SCHEMA = Joi
+    .object()
+    .keys({
+        email: Joi.string().email().required(),
+        hash: Joi.string().required(),
+        password: Joi.string().required()
+    });
 
 module.exports = {
     validate,
@@ -338,5 +359,8 @@ module.exports = {
     ADD_FEEDBACK_SCHEMA,
     GET_ALL_FEEDBACK_SCHEMA,
     GET_ONE_FEEDBACK_SCHEMA,
-    DELETE_FEEDBACK_SCHEMA
+    DELETE_FEEDBACK_SCHEMA,
+    SEND_RECOVERY_HASH_SCHEMA,
+    CHECK_RECOVERY_HASH_SCHEMA,
+    SET_NEW_PASSWORD_SCHEMA
 };

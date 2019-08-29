@@ -11,20 +11,20 @@ const REGISTER_USER_URL = `${PREFIX_URL}/register`;
 const LOGIN_URL = `${PREFIX_URL}/login`;
 const CHECK_URL = `${PREFIX_URL}/check`;
 const LOGOUT_URL = `${PREFIX_URL}/logout`;
-const SEND_RECOVERY_HASH = `${PREFIX_URL}/sendRecoveryHash`;
-const CHECK_RECOVERY_HASH = `${PREFIX_URL}/checkRecoveryHash`;
-const SET_NEW_PASSWORD = `${PREFIX_URL}/setNewPassword`;
+const SEND_RECOVERY_HASH_URL = `${PREFIX_URL}/sendRecoveryHash`;
+const CHECK_RECOVERY_HASH_URL = `${PREFIX_URL}/checkRecoveryHash`;
+const SET_NEW_PASSWORD_URL = `${PREFIX_URL}/setNewPassword`;
 
 
-router.post(SEND_RECOVERY_HASH,
-    validator.validate(validator.GET_ONE_USER_SCHEMA),
+router.post(SEND_RECOVERY_HASH_URL,
+    validator.validate(validator.SEND_RECOVERY_HASH_SCHEMA),
     async (ctx) => {
         try {
             let data = ctx.request.body;
             let hash = await authHelper.getRecoveryHash(data.email);
             if (hash) {
                 // await mailerHelper.sendRecoveryHash(data.email, hash);
-                
+
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
@@ -47,7 +47,8 @@ router.post(SEND_RECOVERY_HASH,
         }
     });
 
-router.post(CHECK_RECOVERY_HASH,
+router.post(CHECK_RECOVERY_HASH_URL,
+    validator.validate(validator.CHECK_RECOVERY_HASH_SCHEMA),
     async (ctx) => {
         try {
             let data = ctx.request.body;
@@ -75,17 +76,18 @@ router.post(CHECK_RECOVERY_HASH,
         }
     });
 
-    router.post(SET_NEW_PASSWORD,
+    router.post(SET_NEW_PASSWORD_URL,
+        validator.validate(validator.SET_NEW_PASSWORD_SCHEMA),
         async (ctx) => {
             try {
                 let data = ctx.request.body;
                 let res = await authHelper.checkRecoveryHash(data.email, data.hash);
                 if (res) {
-                    let hashNewPassword = await authHelper.getHash(data.newPassword);
+                    let hashNewPassword = await authHelper.getHash(data.password);
                     let accessUser = await usersQueries.getOneUser({email: data.email});
 
                     await usersQueries.editUser(accessUser.id, {password: hashNewPassword});
-                    
+
                     ctx.status = 200;
                     ctx.body = {
                         status: 'success',
@@ -95,7 +97,7 @@ router.post(CHECK_RECOVERY_HASH,
                     ctx.status = 400;
                     ctx.body = {
                         status: 'error',
-                        message: 'Некорректный Hash', 
+                        message: 'Некорректный Hash',
                     };
                 }
             } catch (err) {

@@ -86,6 +86,8 @@ function editUser(id, data) {
     return knex('users')
         .where({'id': id})
         .update(data)
+        .returning(['id', 'email', 'phone_number', 'first_name', 'second_name', 'created_at', 'updated_at'])
+        .then(res => res[0]);
 }
 
 function updateToken(id, token){
