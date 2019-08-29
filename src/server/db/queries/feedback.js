@@ -1,7 +1,10 @@
 const knex = require('../connection');
 
 function sendMessage(data) {
-    return knex('feedback').insert(data);
+    return knex('feedback')
+        .insert(data)
+        .returning('*')
+        .then(res => res[0]);
 }
 
 function getAllMessages(data) {
@@ -15,10 +18,11 @@ function getAllMessages(data) {
 function getOneMessage(data) {
     return knex('feedback')
         .select('id', 'name', 'email', 'phone', 'message')
-        .where('id', data.id);
+        .where('id', data.id)
+        .first();
 }
 
-function deleteMessage(id) {
+function deleteMessage(data) {
     return knex('feedback')
         .where('id', data.id)
         .del();

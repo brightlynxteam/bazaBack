@@ -42,7 +42,7 @@ router.post(
     }
 );
 
-router.get(
+router.post(
     GET_ALL_MESSAGES_URL,
     authHelper.checkAuth,
     rolesHelper.isAdmin,
@@ -74,14 +74,14 @@ router.get(
     }
 );
 
-router.get(
+router.post(
     GET_ONE_NESSAGE_URL,
     authHelper.checkAuth,
     rolesHelper.isAdmin,
     validator.validate(validator.GET_ONE_FEEDBACK_SCHEMA),
     async ctx => {
         try {
-            let res = feedbackQueries.getOneMessage(ctx.request.body);
+            let res = await feedbackQueries.getOneMessage(ctx.request.body);
             ctx.status = 200;
             ctx.body = {
                 status: 'OK',
@@ -98,15 +98,14 @@ router.get(
     }
 );
 
-router.delete(
+router.post(
     DELETE_MESSAGE_URL,
     authHelper.checkAuth,
     rolesHelper.isAdmin,
     validator.validate(validator.DELETE_FEEDBACK_SCHEMA),
     async ctx => {
         try {
-            let { id } = ctx.request.body;
-            let res = feedbackQueries.deleteMessage(ctx.request.body);
+            let res = await feedbackQueries.deleteMessage(ctx.request.body);
             if (res) {
                 ctx.status = 200;
                 ctx.body = {
