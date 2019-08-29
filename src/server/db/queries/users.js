@@ -42,28 +42,44 @@ function register(data) {
         });
 }
 
-function findUsers(data) {
-    return knex('users')
-        .whereRaw(`
+async function findUsers(data) {
+
+    let whereRaw = `
             to_tsvector('russian', first_name) || 
             to_tsvector('russian', second_name) || 
             to_tsvector('russian', email) ||
             to_tsvector('russian', phone_number) @@ 
             plainto_tsquery('russian', '${data.queryString}')
-            `
-        )
+            `;
+
+    let total = await knex('users')
+        .whereRaw(whereRaw)
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('users')
+        .whereRaw(whereRaw)
         .select('id', 'phone_number', 'email', 'first_name', 'second_name', 'created_at', 'updated_at')
         .orderBy(data.orderBy, data.order)
         .limit(data.limit)
         .offset(data.offset);
+
+    return {result, total};
 }
 
-function getAllUsers(data) {
-    return knex('users')
+async function getAllUsers(data) {
+
+    let total = await knex('users')
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('users')
         .limit(data.limit)
         .offset(data.offset)
         .orderBy(data.orderBy, data.order)
         .select('id', 'email', 'phone_number', 'first_name', 'second_name', 'created_at', 'updated_at');
+
+    return {result, total};
 }
 
 function editUser(id, data) {

@@ -10,6 +10,7 @@ const PREFIX_URL = `/pages`;
 const GET_ONE_PAGE_URL = `${PREFIX_URL}/getOnePage`;
 const GET_ALL_SERVICES_URL = `${PREFIX_URL}/getAllServices`;
 const GET_ALL_INFOS_URL = `${PREFIX_URL}/getAllInfos`;
+const GET_ALL_FAQ_URL = `${PREFIX_URL}/getAllFAQ`;
 const ADD_PAGE_URL = `${PREFIX_URL}/addPage`;
 const EDIT_PAGE_URL = `${PREFIX_URL}/editPage`;
 const DELETE_PAGE_URL = `${PREFIX_URL}/deletePage`;
@@ -82,7 +83,8 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Список услуг получен',
-                data: services
+                data: services.result,
+                total: services.total
             };
         } catch (error) {
             ctx.status = 500;
@@ -106,7 +108,31 @@ router.post(
             ctx.body = {
                 status: 'OK',
                 message: 'Список информации получен',
-                data: infos
+                data: infos.result,
+                total: infos.total
+            };
+        } catch (error) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'Error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(error);
+        }
+    }
+);
+
+router.post(
+    GET_ALL_FAQ_URL,
+    validator.validate(validator.GET_ALL_FAQ_SCHEMA),
+    async ctx => {
+        try {
+            let faq = await pagesQueries.getAllFAQ();
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'FAQ получены',
+                data: faq
             };
         } catch (error) {
             ctx.status = 500;

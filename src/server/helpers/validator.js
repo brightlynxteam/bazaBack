@@ -271,6 +271,11 @@ const EDIT_NEWS_SCHEMA = Joi
     })
     .min(2);
 
+const GET_ALL_FAQ_SCHEMA = Joi.object()
+    .keys({
+
+    });
+
 const ADD_FEEDBACK_SCHEMA = Joi
     .object()
     .keys({
@@ -329,6 +334,7 @@ module.exports = {
     ADD_NEWS_SCHEMA,
     GET_ONE_NEWS_SCHEMA,
     EDIT_NEWS_SCHEMA,
+    GET_ALL_FAQ_SCHEMA,
     ADD_FEEDBACK_SCHEMA,
     GET_ALL_FEEDBACK_SCHEMA,
     GET_ONE_FEEDBACK_SCHEMA,

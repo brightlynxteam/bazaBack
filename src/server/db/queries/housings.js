@@ -1,11 +1,18 @@
 const knex = require('../connection');
 
-function getAllHousings(data) {
-    return knex('housings')
+async function getAllHousings(data) {
+
+    let total = await knex('housings')
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('housings')
         .limit(data.limit)
         .offset(data.offset)
         .orderBy(data.orderBy, data.order)
         .select('id', 'number', 'description', 'photos');
+
+    return {result, total};
 }
 
 async function editHousing(data) {

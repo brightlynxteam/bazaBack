@@ -122,6 +122,41 @@ exports.seed = function (knex, Promise) {
                         'http://upts.vorkuta.com/images/credit_card.png',
                         'https://cs6.livemaster.ru/storage/b1/80/6e1f208548e3dabaf5c7e031e07r.jpg'
                     ],
+                },
+                {
+                    text_id: 'skolko_chelovek_vmeschaet_v_sebya_odin_odnoetajnyiy_domik',
+                    type: 'FAQ',
+                    title: 'Сколько человек вмещает в себя один одноэтажный домик?',
+                    description: 'Вопросы о размещении',
+                    content: 'Один стандартный одноэтажный домик содержит либо две односпальные кровати, либо одну двухспальную, соответственно, может вместить двух человек.'
+                },
+                {
+                    text_id: 'mojno_li_zaselitsya_v_dvuhmestnyiy_nomer_dvum_lyudyam_s_grudnyim_rebenkom',
+                    type: 'FAQ',
+                    title: 'Можно ли заселиться в двухместный номер двум людям с грудным ребенком?',
+                    description: 'Вопросы о размещении',
+                    content: 'Мы идем навстречу всем своим гостям, поэтому при необходимости бесплатно можем предоставить дополнительную кроватку для ребенка.'
+                },
+                {
+                    text_id: 'za_kakoe_vremya_nujno_bronirovat_nomera',
+                    type: 'FAQ',
+                    title: 'За какое время нужно бронировать номера?',
+                    description: 'Вопросы о бронировании',
+                    content: 'В любое удобное для Вас время, в высокий сезон желательно заранее.'
+                },
+                {
+                    text_id: 'predostavlyaetsya_li_gostyam_utyug',
+                    type: 'FAQ',
+                    title: 'Предоставляется ли гостям утюг?',
+                    description: 'Вопросы об услугах',
+                    content: 'На базе отдыха есть прачечные и гладильни, в которых Вы можете привести в порядок свою одежду.'
+                },
+                {
+                    text_id: 'kakoe_oborudovanie_baza_otdyiha_mojet_predostavit_dlya_provedeniya_seminara',
+                    type: 'FAQ',
+                    title: 'Какое оборудование база отдыха может предоставить для проведения семинара?',
+                    description: 'Вопросы об услугах',
+                    content: 'Мы можем предоставить любое оборудование по предварительному запросу.'
                 }
             ]);
         });

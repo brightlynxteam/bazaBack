@@ -9,8 +9,8 @@ exports.up = function (knex, Promise) {
             table.string('title', 255).notNullable();
             table.text('description').notNullable();
             table.text('content').notNullable();
-            table.string('main_image', 255);
-            table.specificType('content_images', 'VARCHAR(255) []');
+            table.string('main_image', 255).defaultTo(null);
+            table.specificType('content_images', 'VARCHAR(255) []').defaultTo(null);
             table.boolean('active').defaultTo(true).notNullable();
             table.integer('created_at').defaultTo(knex.raw('extract(epoch from now())'));
             table.integer('updated_at').defaultTo(knex.raw('extract(epoch from now())'));

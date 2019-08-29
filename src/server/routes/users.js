@@ -57,7 +57,8 @@ router.post(GET_ALL_USERS_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователи получены!',
-                    data: res
+                    data: res.result,
+                    total: res.total
                 };
             } else {
                 ctx.status = 404;
@@ -89,7 +90,8 @@ router.post(FIND_USERS_URL,
                 ctx.body = {
                     status: 'success',
                     message: 'Пользователи получены!',
-                    data: res
+                    data: res.result,
+                    total: res.total
                 };
             } else {
                 ctx.status = 404;
