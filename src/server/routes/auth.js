@@ -22,13 +22,21 @@ router.post(SEND_RECOVERY_HASH,
         try {
             let data = ctx.request.body;
             let hash = await authHelper.getRecoveryHash(data.email);
-
-            // await mailerHelper.sendRecoveryHash(data.email, hash)
-
-            ctx.status = 200;
-            ctx.body = {
-                status: 'ok',
-            };
+            if (hash) {
+                // await mailerHelper.sendRecoveryHash(data.email, hash);
+                
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'success',
+                    message: 'Hash отправлен на email',
+                };
+            } else {
+                ctx.status = 400;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Неверный email',
+                };
+            }
         } catch (err) {
             ctx.status = 500;
             ctx.body = {
@@ -48,11 +56,13 @@ router.post(CHECK_RECOVERY_HASH,
                 ctx.status = 200;
                 ctx.body = {
                     status: 'success',
+                    message: 'Верный hash',
                 };
             } else {
                 ctx.status = 400;
                 ctx.body = {
                     status: 'error',
+                    message: 'Неверный hash',
                 };
             }
         } catch (err) {

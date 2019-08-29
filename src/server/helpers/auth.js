@@ -5,18 +5,18 @@ const usersQueries = require('../db/queries/users');
 
 async function getRecoveryHash(email) {
     const accessUser = await usersQueries.getOneUser({email: email});
-    return await hash({
-        email: email,
-        updated_at: accessUser.updated_at,
-    });
-}
-
-async function checkRecoveryHash(email, hash) {
-    if (await getRecoveryHash(email) === hash) {
-        return true;
+    if(accessUser) {
+        return await hash({
+            email: email,
+            updated_at: accessUser.updated_at,
+        });
     } else {
         return false;
     }
+}
+
+async function checkRecoveryHash(email, hash) {
+    return (await getRecoveryHash(email) === hash);
 }
 
 async function getHash(plaintextPassword) {
