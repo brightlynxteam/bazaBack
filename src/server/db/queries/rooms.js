@@ -10,14 +10,14 @@ async function getAllRooms(data) {
         .limit(data.limit)
         .offset(data.offset)
         .orderBy(data.orderBy, data.order)
-        .select('id', 'number', 'description', 'active', 'housing', 'capacity');
+        .select('id', 'number', 'description', 'main_image', 'content_images', 'price', 'active', 'housing', 'capacity');
 
     return {result, total};
 }
 
 async function editRoom(data) {
     return knex('rooms')
-        .returning(['id', 'number', 'description', 'active', 'housing', 'capacity'])
+        .returning(['id', 'number', 'description', 'main_image', 'content_images', 'price', 'active', 'housing', 'capacity'])
         .where({'id': data.id})
         .update(data)
         .then(res => res[0]);
@@ -25,7 +25,7 @@ async function editRoom(data) {
 
 async function addRoom(data) {
     return knex('rooms')
-        .returning(['id', 'number', 'description', 'active', 'housing', 'capacity'])
+        .returning(['id', 'number', 'description', 'main_image', 'content_images', 'price', 'active', 'housing', 'capacity'])
         .insert(data)
         .then(res => res[0]);
 }
@@ -33,7 +33,7 @@ async function addRoom(data) {
 async function getOneRoom(data) {
     return knex('rooms')
         .where({id: data.id})
-        .select('id', 'number', 'description', 'active', 'housing', 'capacity');
+        .select('id', 'number', 'description', 'main_image', 'content_images', 'price', 'active', 'housing', 'capacity');
 };
 
 module.exports = {

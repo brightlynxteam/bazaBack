@@ -6,6 +6,9 @@ exports.up = function (knex, Promise) {
             table.increments('id').primary();
             table.integer('number');
             table.text('description');
+            table.string('main_image');
+            table.specificType('content_images', 'VARCHAR(255) []');
+            table.integer('price');
             table.boolean('active');
             table.integer('housing')
                 .references('id')
