@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
-const FROM = 'База отдыха Хуторок'
+const FROM = '"База отдыха Хуторок"<hutoroktest@gmail.com>';
 
 let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
