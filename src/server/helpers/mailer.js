@@ -33,7 +33,6 @@ async function getShortLink(url) {
             method: 'get',
             url: `https://clck.ru/--?url=${url}`
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
