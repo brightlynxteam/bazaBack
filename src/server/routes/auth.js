@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const validator = require('../helpers/validator');
 const usersQueries = require('../db/queries/users');
 const authHelper = require('../helpers/auth');
-// const mailerHelper = require('../helpers/mailer');
+const mailerHelper = require('../helpers/mailer');
 
 const router = new Router();
 
@@ -23,7 +23,7 @@ router.post(SEND_RECOVERY_HASH_URL,
             let data = ctx.request.body;
             let hash = await authHelper.getRecoveryHash(data.email);
             if (hash) {
-                // await mailerHelper.sendRecoveryHash(data.email, hash);
+                await mailerHelper.sendRecoveryHash(data.email, hash);
 
                 ctx.status = 200;
                 ctx.body = {
