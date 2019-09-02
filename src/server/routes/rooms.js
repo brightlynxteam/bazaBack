@@ -108,7 +108,7 @@ router.post(
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные о комнате получены!',
-                    room: res
+                    data: res
                 };
             } else {
                 ctx.status = 404;
