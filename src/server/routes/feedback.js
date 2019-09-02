@@ -55,7 +55,8 @@ router.post(
                 ctx.body = {
                     status: 'OK',
                     message: 'Данные об отзывах получены!',
-                    data: res
+                    data: res.result,
+                    total: res.total
                 };
             } else {
                 ctx.status = 404;

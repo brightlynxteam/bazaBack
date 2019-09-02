@@ -7,12 +7,19 @@ function sendMessage(data) {
         .then(res => res[0]);
 }
 
-function getAllMessages(data) {
-    return knex('feedback')
+async function getAllMessages(data) {
+
+    let total = await knex('feedback')
+        .count('id')
+        .then(res => res[0].count);
+
+    let result = await knex('feedback')
         .limit(data.limit)
         .offset(data.offset)
         .orderBy(data.orderBy, data.order)
         .select('id', 'name', 'email', 'phone', 'message');
+
+    return {result, total};
 }
 
 function getOneMessage(data) {
