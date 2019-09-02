@@ -49,7 +49,7 @@ router.post(GET_ONE_NEWS_URL,
                 ctx.body = {
                     status: 'OK',
                     message: 'Новость получена!',
-                    news: resultData
+                    data: resultData
                 };
             } else {
                 ctx.status = 404;
