@@ -118,6 +118,9 @@ router.post(EDIT_USER_URL,
             let data = ctx.request.body;
             let id = data.id;
             delete data.id;
+            if (data.password) {
+                data.password = await authHelper.getHash(data.password);
+            }
             let res = await usersQueries.editUser(id, data);
             if (res) {
                 ctx.status = 200;
