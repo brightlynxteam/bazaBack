@@ -228,6 +228,7 @@ const ADD_HOUSING_SCHEMA = Joi
     .object()
     .keys({
         number: Joi.number().required(),
+        title: Joi.string().required(),
         description: Joi.string().required(),
         photos: Joi.array().items(Joi.string()).required()
     });
@@ -333,6 +334,32 @@ const SET_NEW_PASSWORD_SCHEMA = Joi
         password: Joi.string().required()
     });
 
+const EDIT_PAGES_CATEGORY_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        name: Joi.string().required()
+    });
+
+const DELETE_PAGES_CATEGORY_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required()
+    });
+
+const ADD_PAGES_CATEGORY_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1).required(),
+        name: Joi.string().required()
+    });
+
+const GET_ALL_PAGES_CATEGORIES_SCHEMA = Joi
+    .object()
+    .keys({
+
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -368,5 +395,9 @@ module.exports = {
     DELETE_FEEDBACK_SCHEMA,
     SEND_RECOVERY_HASH_SCHEMA,
     CHECK_RECOVERY_HASH_SCHEMA,
-    SET_NEW_PASSWORD_SCHEMA
+    SET_NEW_PASSWORD_SCHEMA,
+    EDIT_PAGES_CATEGORY_SCHEMA,
+    DELETE_PAGES_CATEGORY_SCHEMA,
+    ADD_PAGES_CATEGORY_SCHEMA,
+    GET_ALL_PAGES_CATEGORIES_SCHEMA
 };

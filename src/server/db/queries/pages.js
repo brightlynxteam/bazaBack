@@ -22,7 +22,7 @@ async function getAllServices(data) {
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
-        .select('id', 'text_id', 'title', 'description', 'main_image');
+        .select('id', 'text_id', 'category', 'title', 'description', 'main_image');
 
     return {result, total};
 }

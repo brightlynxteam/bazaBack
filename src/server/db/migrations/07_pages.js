@@ -6,6 +6,7 @@ exports.up = function (knex, Promise) {
             table.increments('id').primary();
             table.string('text_id', 255).unique();
             table.string('type', 255).notNullable();
+            table.string('category').references('id').inTable('pages_categories').defaultTo(null);
             table.string('title', 255).notNullable();
             table.text('description').notNullable();
             table.text('content').notNullable();

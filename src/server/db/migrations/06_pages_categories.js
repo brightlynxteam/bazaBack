@@ -1,16 +1,14 @@
 const {onUpdateTrigger} = require('../../../../knexfile');
 exports.up = function (knex, Promise) {
+
     return knex.schema
-        .createTable('housings', function (table) {
+        .createTable('pages_categories', function (table) {
             table.increments('id').primary();
-            table.string('title');
-            table.integer('number');
-            table.text('description');
-            table.specificType('photos', 'text ARRAY')
+            table.string('name').unique();
         });
 };
 
 exports.down = function (knex, Promise) {
     return knex.schema
-        .dropTable("housings");
+        .dropTable("pages_categories");
 };

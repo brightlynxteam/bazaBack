@@ -10,14 +10,14 @@ async function getAllHousings(data) {
         .limit(data.limit)
         .offset(data.offset)
         .orderBy(data.orderBy, data.order)
-        .select('id', 'number', 'description', 'photos');
+        .select('id', 'number', 'title', 'description', 'photos');
 
     return {result, total};
 }
 
 async function editHousing(data) {
     return knex('housings')
-        .returning(['id', 'number', 'description', 'photos'])
+        .returning(['id', 'number', 'title', 'description', 'photos'])
         .where({'id': data.id})
         .update(data);
 }
@@ -32,7 +32,7 @@ function getHousing(data) {
 function addHousing(data) {
     return knex('housings')
         .insert(data)
-        .returning(['id', 'number', 'description', 'photos'])
+        .returning(['id', 'number', 'title', 'description', 'photos'])
 }
 
 module.exports = {
