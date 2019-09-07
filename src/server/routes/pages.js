@@ -171,7 +171,7 @@ router.post(EDIT_PAGE_URL,
                 ctx.status = 400;
                 ctx.body = {
                     status: 'error',
-                    message: 'Некpageорректные данные'
+                    message: 'Некорректные данные'
                 };
             }
         } catch (err) {

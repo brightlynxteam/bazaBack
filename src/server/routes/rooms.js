@@ -16,7 +16,7 @@ router.post(GET_ALL_ROOMS_URL,
         try {
             let data = ctx.request.body;
             let res = await roomsQueries.getAllRooms(data);
-            if (res) {
+            if (res.result) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',

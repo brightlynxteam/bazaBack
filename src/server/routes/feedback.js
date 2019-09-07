@@ -50,7 +50,7 @@ router.post(
     async ctx => {
         try {
             let res = await feedbackQueries.getAllMessages(ctx.request.body);
-            if (res.length > 0) {
+            if (res.result.length > 0) {
                 ctx.status = 200;
                 ctx.body = {
                     status: 'OK',
