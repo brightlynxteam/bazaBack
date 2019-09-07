@@ -105,6 +105,7 @@ const EDIT_HOUSING_SCHEMA = Joi
         number: Joi.number().integer().min(1),
         description: Joi.string(),
         photos: Joi.array().items(Joi.string()),
+        title: Joi.string()
     })
     .min(2);
 
@@ -230,7 +231,8 @@ const ADD_HOUSING_SCHEMA = Joi
         number: Joi.number().required(),
         title: Joi.string().required(),
         description: Joi.string().required(),
-        photos: Joi.array().items(Joi.string()).required()
+        photos: Joi.array().items(Joi.string()).required(),
+        title: Joi.string().required()
     });
 
 const GET_ONE_ROOM_SCHEMA = Joi
