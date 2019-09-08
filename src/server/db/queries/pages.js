@@ -22,7 +22,7 @@ async function getAllServices(data) {
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
-        .select('id', 'text_id', 'category', 'title', 'description', 'main_image');
+        .select('id', 'text_id', 'category', 'title', 'description', 'main_image', 'active');
 
     return {result, total};
 }
@@ -43,7 +43,7 @@ async function getAllInfos(data) {
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
-        .select('id', 'text_id', 'title', 'description', 'main_image');
+        .select('id', 'text_id', 'title', 'description', 'main_image', 'active');
 
     return {result, total};
 }
@@ -51,7 +51,7 @@ async function getAllInfos(data) {
 async function getAllFAQ() {
 
     let data = await knex('pages')
-        .select('id', 'text_id', 'title', 'description', 'content')
+        .select('id', 'text_id', 'title', 'description', 'content', 'active')
         .where({
             type: 'FAQ'
         })

@@ -16,7 +16,7 @@ async function getAllNews(data) {
         .orderBy(data.orderBy, data.order)
         .offset(data.offset)
         .limit(data.limit)
-        .select('id', 'title', 'description', 'main_image', 'created_at', 'updated_at');
+        .select('id', 'title', 'description', 'main_image', 'repost', 'created_at', 'updated_at');
 
     return {result, total};
 }
