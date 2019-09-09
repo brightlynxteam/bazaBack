@@ -14,7 +14,29 @@ function addReservation(data) {
         .returning('*');
 }
 
+function getFreeRooms(data) {
+    return knex('rooms')
+        .select('*')
+        .whereRaw(`id not in ( 
+            select room 
+            from reservation res 
+            where res.start_date <= ${data.startDate} and res.end_date > ${data.startDate} 
+                or res.start_date < ${data.endDate} and res.end_date >= ${data.endDate} 
+            )`
+        );
+}
+
+function getRoomReservations(id) {
+    return knex('reservation')
+        .select('start_date', 'end_date')
+        .where({
+            room: id
+        });
+}
+
 module.exports = {
     addReservation,
     editReservation,
+    getFreeRooms,
+    getRoomReservations
 };

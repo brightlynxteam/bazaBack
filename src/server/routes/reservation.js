@@ -6,6 +6,8 @@ const router = new Router();
 const PREFIX_URL = '/reservation';
 const ADD_RESERVATION_URL = `${PREFIX_URL}/addReservation`;
 const EDIT_RESERVATION_URL = `${PREFIX_URL}/editReservation`;
+const GET_FREE_ROOMS_URL = `${PREFIX_URL}/getFreeRooms`;
+const GET_ROOM_RESERVATIONS_URL = `${PREFIX_URL}/getRoomReservations`;
 
 router.post(ADD_RESERVATION_URL,
     validator.validate(validator.ADD_RESERVATION_SCHEMA),
@@ -77,4 +79,62 @@ router.post(EDIT_RESERVATION_URL,
     }
 );
 
+router.post(GET_FREE_ROOMS_URL,
+    validator.validate(validator.GET_FREE_ROOMS_SCHEMA),
+    async (ctx) => {
+
+        try {
+            let data = ctx.request.body;
+            let rooms = await reservationQueries.getFreeRooms(data);
+
+            if (rooms.length) {
+                ctx.status = 200;
+                ctx.body = {
+                    status: 'OK',
+                    message: 'Номера получены!',
+                    data: rooms
+                };
+            } else {
+                ctx.status = 404;
+                ctx.body = {
+                    status: 'error',
+                    message: 'Нет свободных номеров!'
+                }
+            }
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err);
+        }
+    }
+);
+
+router.post(GET_ROOM_RESERVATIONS_URL,
+    validator.validate(validator.GET_ROOM_RESERVATIONS_SCHEMA),
+    async (ctx) => {
+
+        try {
+            let id = ctx.request.body.id;
+            let reservations = await reservationQueries.getRoomReservations(id);
+
+            ctx.status = 200;
+            ctx.body = {
+                status: 'OK',
+                message: 'Бронирования получены!',
+                data: reservations
+            };
+
+        } catch (err) {
+            ctx.status = 500;
+            ctx.body = {
+                status: 'error',
+                message: 'Внутренняя ошибка сервера.'
+            };
+            console.log(err);
+        }
+    }
+);
 module.exports = router;

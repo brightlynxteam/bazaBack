@@ -364,6 +364,19 @@ const GET_ALL_PAGES_CATEGORIES_SCHEMA = Joi
 
     });
 
+const GET_FREE_ROOMS_SCHEMA = Joi
+    .object()
+    .keys({
+        startDate: Joi.number().integer().required(),
+        endDate: Joi.number().integer().required()
+    });
+
+const GET_ROOM_RESERVATIONS_SCHEMA = Joi
+    .object()
+    .keys({
+        id: Joi.number().integer().min(1)
+    });
+
 module.exports = {
     validate,
     GET_ONE_USER_SCHEMA,
@@ -403,5 +416,7 @@ module.exports = {
     EDIT_PAGES_CATEGORY_SCHEMA,
     DELETE_PAGES_CATEGORY_SCHEMA,
     ADD_PAGES_CATEGORY_SCHEMA,
-    GET_ALL_PAGES_CATEGORIES_SCHEMA
+    GET_ALL_PAGES_CATEGORIES_SCHEMA,
+    GET_FREE_ROOMS_SCHEMA,
+    GET_ROOM_RESERVATIONS_SCHEMA
 };
