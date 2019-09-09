@@ -1,7 +1,7 @@
 const knex = require('../connection');
 
 function addPagesCategory(name) {
-    return knex('pages_category')
+    return knex('pages_categories')
         .insert({
             name: name
         })
@@ -10,14 +10,14 @@ function addPagesCategory(name) {
 
 function getAllPagesCategories() {
 
-    return knex('pages_category')
+    return knex('pages_categories')
         .select('id', 'name');
 
 }
 
 function editPagesCategory(data) {
 
-    return knex('pages_category')
+    return knex('pages_categories')
         .returning(['id', 'name'])
         .where({'id': data.id})
         .update({
@@ -27,7 +27,7 @@ function editPagesCategory(data) {
 }
 
 function deletePagesCategory(id) {
-    return knex('pages_category')
+    return knex('pages_categories')
         .where({
             id: id
         })
