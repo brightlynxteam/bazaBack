@@ -16,7 +16,7 @@ function addReservation(data) {
 
 function getFreeRooms(data) {
     
-    let capacityWhere = data.capacity ? `and rooms.capacity = ${data.capacity}` : '';
+    let capacityWhere = data.capacity ? `and rooms.capacity >= ${data.capacity}` : '';
     
     return knex('rooms')
         .select('*')
