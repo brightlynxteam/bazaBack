@@ -368,7 +368,8 @@ const GET_FREE_ROOMS_SCHEMA = Joi
     .object()
     .keys({
         startDate: Joi.number().integer().required(),
-        endDate: Joi.number().integer().required()
+        endDate: Joi.number().integer().required(),
+        capacity: Joi.number().integer().min(1)
     });
 
 const GET_ROOM_RESERVATIONS_SCHEMA = Joi

@@ -15,6 +15,9 @@ function addReservation(data) {
 }
 
 function getFreeRooms(data) {
+    
+    let capacityWhere = data.capacity ? `and rooms.capacity = ${data.capacity}` : '';
+    
     return knex('rooms')
         .select('*')
         .whereRaw(`id not in ( 
@@ -22,7 +25,9 @@ function getFreeRooms(data) {
             from reservation res 
             where res.start_date <= ${data.startDate} and res.end_date > ${data.startDate} 
                 or res.start_date < ${data.endDate} and res.end_date >= ${data.endDate} 
-            )`
+            ) 
+             ${capacityWhere}
+            `
         );
 }
 
